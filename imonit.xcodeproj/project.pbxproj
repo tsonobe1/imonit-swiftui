@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C1FE1312A8D099F005F5842 /* TopTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1FE1302A8D099F005F5842 /* TopTabView.swift */; };
+		0C1FE1332A8D0F7E005F5842 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1FE1322A8D0F7E005F5842 /* CalendarView.swift */; };
+		0C3719562A9A02DD00D777A0 /* CalendarWeeklyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3719552A9A02DD00D777A0 /* CalendarWeeklyView.swift */; };
+		0C74ED202AA3553300957167 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0C74ED1F2AA3553300957167 /* README.md */; };
+		0C8501B62A8F68140063DE70 /* CalendarDailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8501B52A8F68140063DE70 /* CalendarDailyView.swift */; };
+		0C8501B82A8FB6B60063DE70 /* CalendarWeeklyView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8501B72A8FB6B60063DE70 /* CalendarWeeklyView2.swift */; };
 		0CDAACFB2A8A56B700520D8A /* imonitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDAACFA2A8A56B700520D8A /* imonitApp.swift */; };
 		0CDAACFD2A8A56B700520D8A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDAACFC2A8A56B700520D8A /* ContentView.swift */; };
 		0CDAACFF2A8A56B900520D8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CDAACFE2A8A56B900520D8A /* Assets.xcassets */; };
@@ -14,6 +20,9 @@
 		0CDAAD0D2A8A56B900520D8A /* imonitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDAAD0C2A8A56B900520D8A /* imonitTests.swift */; };
 		0CDAAD172A8A56B900520D8A /* imonitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDAAD162A8A56B900520D8A /* imonitUITests.swift */; };
 		0CDAAD192A8A56B900520D8A /* imonitUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDAAD182A8A56B900520D8A /* imonitUITestsLaunchTests.swift */; };
+		0CDAAD282A8BA3E600520D8A /* GoalListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDAAD272A8BA3E600520D8A /* GoalListView.swift */; };
+		0CDAAD2A2A8BA56E00520D8A /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDAAD292A8BA56E00520D8A /* SampleData.swift */; };
+		0CEED44B2A93BA29007FFA50 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEED44A2A93BA29007FFA50 /* Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +43,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C1FE1302A8D099F005F5842 /* TopTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopTabView.swift; sourceTree = "<group>"; };
+		0C1FE1322A8D0F7E005F5842 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		0C3719552A9A02DD00D777A0 /* CalendarWeeklyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWeeklyView.swift; sourceTree = "<group>"; };
+		0C74ED1F2AA3553300957167 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		0C8501B52A8F68140063DE70 /* CalendarDailyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDailyView.swift; sourceTree = "<group>"; };
+		0C8501B72A8FB6B60063DE70 /* CalendarWeeklyView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWeeklyView2.swift; sourceTree = "<group>"; };
 		0CDAACF72A8A56B700520D8A /* imonit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = imonit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CDAACFA2A8A56B700520D8A /* imonitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imonitApp.swift; sourceTree = "<group>"; };
 		0CDAACFC2A8A56B700520D8A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -45,6 +60,9 @@
 		0CDAAD122A8A56B900520D8A /* imonitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = imonitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CDAAD162A8A56B900520D8A /* imonitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imonitUITests.swift; sourceTree = "<group>"; };
 		0CDAAD182A8A56B900520D8A /* imonitUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imonitUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0CDAAD272A8BA3E600520D8A /* GoalListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalListView.swift; sourceTree = "<group>"; };
+		0CDAAD292A8BA56E00520D8A /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		0CEED44A2A93BA29007FFA50 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,9 +90,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C8501B42A8F67DD0063DE70 /* Calender */ = {
+			isa = PBXGroup;
+			children = (
+				0C1FE1322A8D0F7E005F5842 /* CalendarView.swift */,
+				0C3719552A9A02DD00D777A0 /* CalendarWeeklyView.swift */,
+				0C8501B52A8F68140063DE70 /* CalendarDailyView.swift */,
+			);
+			path = Calender;
+			sourceTree = "<group>";
+		};
 		0CDAACEE2A8A56B600520D8A = {
 			isa = PBXGroup;
 			children = (
+				0C74ED1F2AA3553300957167 /* README.md */,
+				0CDAAD292A8BA56E00520D8A /* SampleData.swift */,
+				0CEED44A2A93BA29007FFA50 /* Extension.swift */,
+				0C8501B72A8FB6B60063DE70 /* CalendarWeeklyView2.swift */,
 				0CDAACF92A8A56B700520D8A /* imonit */,
 				0CDAAD0B2A8A56B900520D8A /* imonitTests */,
 				0CDAAD152A8A56B900520D8A /* imonitUITests */,
@@ -96,7 +128,10 @@
 			isa = PBXGroup;
 			children = (
 				0CDAACFA2A8A56B700520D8A /* imonitApp.swift */,
+				0C1FE1302A8D099F005F5842 /* TopTabView.swift */,
+				0CDAAD272A8BA3E600520D8A /* GoalListView.swift */,
 				0CDAACFC2A8A56B700520D8A /* ContentView.swift */,
+				0C8501B42A8F67DD0063DE70 /* Calender */,
 				0CDAACFE2A8A56B900520D8A /* Assets.xcassets */,
 				0CDAAD002A8A56B900520D8A /* imonit.entitlements */,
 				0CDAAD012A8A56B900520D8A /* Preview Content */,
@@ -233,6 +268,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C74ED202AA3553300957167 /* README.md in Resources */,
 				0CDAAD032A8A56B900520D8A /* Preview Assets.xcassets in Resources */,
 				0CDAACFF2A8A56B900520D8A /* Assets.xcassets in Resources */,
 			);
@@ -259,8 +295,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CEED44B2A93BA29007FFA50 /* Extension.swift in Sources */,
+				0C1FE1312A8D099F005F5842 /* TopTabView.swift in Sources */,
+				0C8501B82A8FB6B60063DE70 /* CalendarWeeklyView2.swift in Sources */,
 				0CDAACFD2A8A56B700520D8A /* ContentView.swift in Sources */,
 				0CDAACFB2A8A56B700520D8A /* imonitApp.swift in Sources */,
+				0CDAAD282A8BA3E600520D8A /* GoalListView.swift in Sources */,
+				0C8501B62A8F68140063DE70 /* CalendarDailyView.swift in Sources */,
+				0C1FE1332A8D0F7E005F5842 /* CalendarView.swift in Sources */,
+				0C3719562A9A02DD00D777A0 /* CalendarWeeklyView.swift in Sources */,
+				0CDAAD2A2A8BA56E00520D8A /* SampleData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
