@@ -1,5 +1,6 @@
 Translated by chatGPT
 
+[日本語](https://github.com/tsonobe1/imonit-swiftui/blob/main/README.ja.md)
 # imonit
 
 ## Overview
