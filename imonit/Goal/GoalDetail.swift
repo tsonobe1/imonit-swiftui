@@ -15,33 +15,49 @@ struct GoalDetail: View {
     let sampleDetail = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
     
     @State private var isExpandedDisclosure = true
+    @State private var isSheetPresented = false
     private var progress: Double {
         calculateDateProgress(startDate: goal.startDate, endDate: goal.endDate, currentDate: Date())
     }
     
     var body: some View {
+        ScrollView{
         VStack(alignment: .leading){
             // 👩‍👧MARK: ParentPath
-            if goal.parent != nil {
-                ScrollView(.horizontal, showsIndicators: false){
-                    parentPath
+                if goal.parent != nil {
+                    ScrollView(.horizontal, showsIndicators: false){
+                        parentPath
+                    }
                 }
+                
+                // 😀MARK: title
+                Text(goal.title)
+                    .font(.title3)
+                // 📈MARK: StartDate ~ EndDate % progress
+                dateProgress
+                
+                // ℹ️MARK: Detail
+                details
+                
+                // ⛳️MARK: Children = subGoal
+                subGoal
             }
-            
-            // 😀MARK: title
-            Text(goal.title)
-                .font(.title3)
-            
-            // 📈MARK: StartDate ~ EndDate % progress
-            dateProgress
-            
-            // ℹ️MARK: Detail
-            details
-            
-            // ⛳️MARK: Children = milestones
-            milestones
         }
-        .padding()
+        .toolbar{
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    isSheetPresented.toggle()
+                } label: {
+                    Image(systemName: "plus")
+                }
+
+            }
+        }
+        .padding(5)
+        .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $isSheetPresented) {
+            AddGoel(parent: goal)
+        }
     }
     
     private var dateProgress: some View {
@@ -61,11 +77,10 @@ struct GoalDetail: View {
                     .fill(.thinMaterial)
                     .overlay(
                         GeometryReader { proxy in
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(.secondary)
+                            RoundedRectangle(cornerRadius: 5)
+                                .fill(.green.gradient.opacity(0.6))
                                 .frame(width: proxy.frame(in: .global).width / 100 * progress)
-                                .blendMode(.difference)
-                            let _ = print(proxy.frame(in: .global).width)
+//                                .blendMode(.difference)
                         }
                     )
             )
@@ -73,7 +88,6 @@ struct GoalDetail: View {
             // MARK: progress & check mark
             HStack{
                 Text("\(String(format: "%.1f", progress)) %")
-            
                 Image(systemName: "checkmark")
                     .opacity(progress == 100 ? 1 : 0)
             }
@@ -112,16 +126,16 @@ struct GoalDetail: View {
                 .opacity(isExpandedDisclosure ? 1 : 0)
         )
     }
-    private var milestones: some View {
+    private var subGoal: some View {
         VStack(alignment: .leading){
             // Headline
             HStack(alignment: .lastTextBaseline){
                 Image(systemName: "figure.stairs")
-                Text("MileStones")
+                Text("SubGoal")
                     .font(.headline)
             }
             
-            // Milestones
+            // SubGoals
             ScrollView{
                 ForEach(goal.children){ child in
                     ChildRow(child: child)
@@ -131,7 +145,7 @@ struct GoalDetail: View {
             
             // TODO: I will delete
             Button("add"){
-                let new = Goal(id: UUID(), title: sampleTitle, detail: sampleDetail, startDate: Date(), endDate: Date(), createdData: Date())
+                let new = Goal(id: UUID(), title: sampleTitle, detail: sampleDetail, startDate: Date(), endDate: Date(), createdData: Date(), parent: nil)
                 new.parent = goal
                 goal.children.append(new)
             }
@@ -161,38 +175,78 @@ struct GoalDetail: View {
 }
 
 struct ChildRow: View {
+    @Environment(\.colorScheme) var colorScheme
     let child: Goal
     @State private var isExpanded: Bool = false
-    
+    private var progress: Double {
+        calculateDateProgress(startDate: child.startDate, endDate: child.endDate, currentDate: Date())
+    }
     var body: some View {
         VStack(alignment: .leading,  spacing: 0){
-            milestoneRow
+            subGoalRow
             siblingConnector
-            nestedMilestones
+            nestedSubGoal
         }
         .background(parentChildConnector)
     }
     
-    private var milestoneRow: some View {
+    private var subGoalRow: some View {
         HStack{
             NavigationLink {
                 GoalDetail(goal: child)
             } label: {
-                Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
-                    .font(.callout)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.leading)
-                    .padding(10)
+                VStack(alignment: .leading){
+                    Text(child.title)
+                        .font(.footnote)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+                    
+                    dateProgress
+                }
+                .foregroundStyle(colorScheme == .dark ? .white : .black)
+                .padding(5)
             }
-            nestedMilestonesExpand
+            nestedSubGoalExpand
         }
+        
         .frame(maxWidth: .infinity, alignment: .leading)
         .background{
             RoundedRectangle(cornerRadius: 8)
                 .fill(.regularMaterial)
         }
     }
-    private var nestedMilestonesExpand: some View{
+    private var dateProgress: some View {
+        HStack{
+            HStack(alignment: .lastTextBaseline){
+                Image(systemName: "calendar.badge.clock")
+                Text(DateFormatter.dayMonthForm.string(from: child.startDate))
+                Text("~")
+                Text(DateFormatter.dayMonthForm.string(from: child.endDate))
+            }
+            .font(.caption2)
+            .padding(.vertical, 1)
+            .padding(.horizontal, 5)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(.thinMaterial)
+                    .overlay(
+                        GeometryReader { proxy in
+                            RoundedRectangle(cornerRadius: 5)
+                                .fill(.green.gradient.opacity(0.3))
+                                .frame(width: proxy.frame(in: .global).width / 100 * progress)
+                        }
+                    )
+            )
+            HStack{
+                Text("\(String(format: "%.1f", progress)) %")
+                Image(systemName: "checkmark")
+                    .opacity(progress == 100 ? 1 : 0)
+            }
+            .foregroundStyle(progress == 100 ? .green : .primary)
+        }
+        .font(.caption2)
+    }
+    private var nestedSubGoalExpand: some View{
         Group{
             if !child.children.isEmpty {
                 Image(systemName: "chevron.right")
@@ -216,7 +270,7 @@ struct ChildRow: View {
                .padding(.leading)
                .offset(x: 5)
        }
-    private var nestedMilestones: some View {
+    private var nestedSubGoal: some View {
         VStack(spacing: 0){
             if isExpanded {
                 ForEach(child.children) { child in

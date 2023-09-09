@@ -21,13 +21,14 @@ final class Goal {
     var parent: Goal?
     @Relationship(deleteRule:.cascade) var children: [Goal] = []
     
-    init(id: UUID, title: String, detail: String, startDate: Date, endDate: Date, createdData: Date) {
+    init(id: UUID, title: String, detail: String, startDate: Date, endDate: Date, createdData: Date, parent: Goal?) {
         self.id = id
         self.title = title
         self.detail = detail
         self.startDate = startDate
         self.endDate = endDate
         self.createdData = createdData
+        self.parent = parent
     }
 }
 

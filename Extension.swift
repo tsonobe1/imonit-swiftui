@@ -31,6 +31,12 @@ extension DateFormatter {
         formatter.dateStyle = .short
         return formatter
     }
+    
+    static var dayMonthForm: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.setLocalizedDateFormatFromTemplate("MM/dd")
+        return formatter
+    }
 }
 
 func caluculateTimeInterval(startDate: Date, endDate: Date) -> CGFloat {
