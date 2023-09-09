@@ -11,7 +11,7 @@ struct TopTabView: View {
     var body: some View {
         //        VStack {
         TabView() {
-            GoalListView()
+            GoalList()
                 .tag(1)
                 .tabItem {
                     Label("Goals", systemImage: "flag")

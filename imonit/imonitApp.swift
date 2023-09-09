@@ -13,5 +13,6 @@ struct imonitApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: Goal.self)
     }
 }

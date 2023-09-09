@@ -25,6 +25,12 @@ extension DateFormatter {
         formatter.dateFormat = "EEE"
         return formatter
     }
+    
+    static var shortDateForm: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter
+    }
 }
 
 func caluculateTimeInterval(startDate: Date, endDate: Date) -> CGFloat {
@@ -44,4 +50,21 @@ func formatTime(from date: Date) -> String {
     formatter.dateFormat = "HH:mm" // 24時間形式
     // formatter.dateFormat = "hh:mm a" // 12時間形式（AM/PM）も可能
     return formatter.string(from: date)
+}
+
+
+func calculateDateProgress(startDate: Date, endDate: Date, currentDate: Date) -> Double {
+    
+    if currentDate <= startDate {
+        return 0.0
+    }
+    
+    if currentDate >= endDate {
+        return 100.0
+    }
+    
+    let totalDuration = endDate.timeIntervalSince(startDate)
+    let elapsedDuration = currentDate.timeIntervalSince(startDate)
+    
+    return (elapsedDuration / totalDuration) * 100.0
 }

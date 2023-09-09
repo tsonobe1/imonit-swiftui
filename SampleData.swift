@@ -1,75 +1,75 @@
 import Foundation
-import Combine
-
-/// Represents a goal with its associated properties and hierarchy.
-class Goal: ObservableObject, Identifiable {
-    var title: String
-    var description: String
-    var startDate: Date
-    var endDate: Date
-    var parentGoal: Goal?
-    @Published var childGoals: [Goal] = []
-
-    /// Initializes a new goal with specified properties.
-    /// - Parameters:
-    ///   - title: The title of the goal.
-    ///   - description: The description of the goal.
-    ///   - startDate: The start date of the goal.
-    ///   - endDate: The end date of the goal.
-    init(title: String, description: String, startDate: Date, endDate: Date) {
-        self.title = title
-        self.description = description
-        self.startDate = startDate
-        self.endDate = endDate
-    }
-
-    /// Adds a child goal to the list of child goals.
-    /// - Parameter goal: The child goal to be added.
-    func addChildGoal(_ goal: Goal) {
-        childGoals.append(goal)
-        goal.parentGoal = self
-    }
-}
-
-/// Stores and manages a collection of goals.
-class GoalsData: ObservableObject {
-    @Published var goals: [Goal] = []
-
-    /// Initializes GoalsData with a collection of goals.
-    /// - Parameter goals: The initial collection of goals.
-    init(goals: [Goal]) {
-        self.goals = goals
-    }
-}
-
-/// Creates a nested goal structure with specified parameters.
-func createNestedGoals(maxDepth: Int, maxPerLevel: Int, currentDepth: Int = 0) -> Goal {
-    let title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit \(currentDepth + 1)"
-    let description = "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth \(currentDepth + 1)"
-    let startDate = Date()
-    let endDate = Date(timeIntervalSinceNow: 86400 * Double(currentDepth + 1))
-    
-    let newGoal = Goal(title: title, description: description, startDate: startDate, endDate: endDate)
-    
-    if currentDepth < maxDepth {
-        let childCount = Int.random(in: 0...maxPerLevel)
-        for _ in 0..<childCount {
-            let childGoal = createNestedGoals(maxDepth: maxDepth, maxPerLevel: maxPerLevel, currentDepth: currentDepth + 1)
-            newGoal.addChildGoal(childGoal)
-        }
-    }
-    
-    return newGoal
-}
-
-/// Creates a collection of top-level goals.
-func createTopLevelGoals(count: Int, maxDepth: Int, maxPerLevel: Int) -> [Goal] {
-    return (0..<count).map { _ in
-        createNestedGoals(maxDepth: maxDepth, maxPerLevel: maxPerLevel)
-    }
-}
-
-
+//import Combine
+//
+///// Represents a goal with its associated properties and hierarchy.
+//class Goal: ObservableObject, Identifiable {
+//    var title: String
+//    var description: String
+//    var startDate: Date
+//    var endDate: Date
+////    var parentGoal: Goal?
+//    @Published var childGoals: [Goal] = []
+//
+//    /// Initializes a new goal with specified properties.
+//    /// - Parameters:
+//    ///   - title: The title of the goal.
+//    ///   - description: The description of the goal.
+//    ///   - startDate: The start date of the goal.
+//    ///   - endDate: The end date of the goal.
+//    init(title: String, description: String, startDate: Date, endDate: Date) {
+//        self.title = title
+//        self.description = description
+//        self.startDate = startDate
+//        self.endDate = endDate
+//    }
+//
+//    /// Adds a child goal to the list of child goals.
+//    /// - Parameter goal: The child goal to be added.
+//    func addChildGoal(_ goal: Goal) {
+//        childGoals.append(goal)
+//        goal.parentGoal = self
+//    }
+//}
+//
+///// Stores and manages a collection of goals.
+//class GoalsData: ObservableObject {
+//    @Published var goals: [Goal] = []
+//
+//    /// Initializes GoalsData with a collection of goals.
+//    /// - Parameter goals: The initial collection of goals.
+//    init(goals: [Goal]) {
+//        self.goals = goals
+//    }
+//}
+//
+///// Creates a nested goal structure with specified parameters.
+//func createNestedGoals(maxDepth: Int, maxPerLevel: Int, currentDepth: Int = 0) -> Goal {
+//    let title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit \(currentDepth + 1)"
+//    let description = "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth \(currentDepth + 1)"
+//    let startDate = Date()
+//    let endDate = Date(timeIntervalSinceNow: 86400 * Double(currentDepth + 1))
+//    
+//    let newGoal = Goal(title: title, description: description, startDate: startDate, endDate: endDate)
+//    
+//    if currentDepth < maxDepth {
+//        let childCount = Int.random(in: 0...maxPerLevel)
+//        for _ in 0..<childCount {
+//            let childGoal = createNestedGoals(maxDepth: maxDepth, maxPerLevel: maxPerLevel, currentDepth: currentDepth + 1)
+//            newGoal.addChildGoal(childGoal)
+//        }
+//    }
+//    
+//    return newGoal
+//}
+//
+///// Creates a collection of top-level goals.
+//func createTopLevelGoals(count: Int, maxDepth: Int, maxPerLevel: Int) -> [Goal] {
+//    return (0..<count).map { _ in
+//        createNestedGoals(maxDepth: maxDepth, maxPerLevel: maxPerLevel)
+//    }
+//}
+//
+//
 
 
 struct Schedule {
