@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct GoalDetail: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Environment(\.modelContext) private var context
     let goal: Goal
  
@@ -19,7 +20,6 @@ struct GoalDetail: View {
     private var progress: Double {
         calculateDateProgress(startDate: goal.startDate, endDate: goal.endDate, currentDate: Date())
     }
-    
     
     
     var body: some View {
@@ -70,11 +70,12 @@ struct GoalDetail: View {
             Text("EDIT")
         }
         .alert("Delete", isPresented: $isDeleteSheetPresented) {
-            Button("Delete") {context.delete(goal)}
+            Button("Delete") {
+                context.delete(goal)
+                self.presentationMode.wrappedValue.dismiss()
+            }
             Button("Cancel") {isDeleteSheetPresented.toggle()}
         }
-        
-       
     }
     
     private var dateProgress: some View {
@@ -143,14 +144,6 @@ struct GoalDetail: View {
                 .opacity(isExpandedDisclosure ? 1 : 0)
         )
     }
-    
-    
-
-
-    
-    
-    
-
     private var parentPath: some View {
         Text(generateParentPath(for: goal))
             .font(.footnote)
@@ -175,13 +168,6 @@ struct GoalDetail: View {
 }
 
 
-
-#Preview {
-    GoalList()
-        .modelContainer(for: Goal.self)
-}
-
-
 struct SubGoal: View {
     @Environment(\.modelContext) private var context
     let goal: Goal
@@ -190,11 +176,6 @@ struct SubGoal: View {
     var children: [Goal]
     
     init(goal: Goal) {
-        
-//        self._children = Query(
-//            filter: #Predicate<Goal> { $0.parent?.id == goal.id },
-//            sort: \Goal.startDate
-//        )
         self.goal = goal
         let goalID = goal.id
         let filter = #Predicate<Goal> { goal in
@@ -207,10 +188,6 @@ struct SubGoal: View {
     @State private var isTimelinePresented = false
     @State private var isAddSheetPresented = false
     
-    func printChild(children: [Goal]){
-        print("children count: \(children.count)")
-    }
-
     var body: some View {
         VStack(alignment: .leading){
             // Headline
@@ -231,11 +208,9 @@ struct SubGoal: View {
                     Image(systemName: "plus")
                 }
             }
-            
             // SubGoals
             ScrollView{
                 ForEach(children){ child in
-//                    let _ = print("\(child.title) + last ? \(String(describing: child.parent?.children.last))")
                     ChildRow(child: child, isLast: children.last?.id == child.id)
                 }
                 Spacer(minLength: 10)
@@ -248,14 +223,12 @@ struct SubGoal: View {
                 goal.children.append(new)
             }
         }
-        
-        
         .sheet(isPresented: $isAddSheetPresented) {
             AddGoel(parent: goal)
         }
         .sheet(isPresented: $isTimelinePresented) {
-                   GoalTimeline(goal: goal)
-               }
+            GoalTimeline(goal: goal)
+        }
     }
     
     let sampleTitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
@@ -264,28 +237,28 @@ struct SubGoal: View {
 
 struct ChildRow: View {
     @Environment(\.colorScheme) var colorScheme
+    
     let child: Goal
+    @Query(sort: \Goal.startDate, order: .forward)
+    var grandChildren: [Goal]
+    let isLast: Bool
+    
     @State private var isExpanded: Bool = false
     private var progress: Double {
         calculateDateProgress(startDate: child.startDate, endDate: child.endDate, currentDate: Date())
     }
     
-    @Query(sort: \Goal.startDate, order: .forward)
-    var grandChildren: [Goal]
-    let isLast: Bool
-    
     init(child: Goal, isLast: Bool) {
-            self.child = child
-            let childID = child.id
-            let filter = #Predicate<Goal> { grandChild in
-                grandChild.parent?.id == childID
-            }
-            let query = Query(filter: filter, sort: \.startDate)
+        self.child = child
+        let childID = child.id
+        let filter = #Predicate<Goal> { grandChild in
+            grandChild.parent?.id == childID
+        }
+        let query = Query(filter: filter, sort: \.startDate)
         _grandChildren = query
         
         self.isLast = isLast
-        }
-    
+    }
     
     var body: some View {
         VStack(alignment: .leading,  spacing: 0){
@@ -298,8 +271,6 @@ struct ChildRow: View {
     
     private var subGoalRow: some View {
         HStack{
-//             let _ = print("Current children: \(child.parent?.children ?? [])")
-
             NavigationLink {
                 GoalDetail(goal: child)
             } label: {
@@ -390,14 +361,10 @@ struct ChildRow: View {
         }
     }
     private var siblingConnector: some View{
-//        let isLast = (child.parent?.children.last == child)
-//            print("Is last: \(isLast), Parent children last: \(String(describing: child.parent?.children.last)), Child: \(child)")
-        
         return Rectangle()
             .fill(Color.secondary)
-//            .opacity(child.parent?.children.last == child ? 0 : 0.8)
             .opacity(isLast ? 0 : 0.8)
-            .mask(    // << here !!
+            .mask(
                 HStack {
                     Rectangle()
                         .frame(width: 3)
@@ -405,5 +372,10 @@ struct ChildRow: View {
                     Spacer()
                 })
     }
+}
 
+
+#Preview {
+    GoalList()
+        .modelContainer(for: Goal.self)
 }

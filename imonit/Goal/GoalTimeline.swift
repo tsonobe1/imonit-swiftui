@@ -14,7 +14,7 @@ struct GoalTimeline: View {
     
     var body: some View {
         GeometryReader { geometry in
-        ScrollView{
+            ScrollView{
                 HStack{
                     VStack{
                         Text(DateFormatter.shortDateForm.string(from: goal.endDate))
@@ -24,8 +24,7 @@ struct GoalTimeline: View {
                     }
                     .font(.footnote)
                     
-//                    
-//                    let _ = print(textHeight)
+                    
                     RoundedRectangle(cornerRadius: 10)
                         .fill(.clear)
                         .border(.cyan)
@@ -34,11 +33,31 @@ struct GoalTimeline: View {
                             Text(goal.title)
                                 .font(.title)
                         }
-                    
-
-                    
                 }
                 .containerRelativeFrame(.vertical, count: 10, span: 10, spacing: 0)
+                .padding(.leading)
+                .overlay{
+                    HStack{
+                        VStack{
+                            Text(DateFormatter.shortDateForm.string(from: goal.endDate))
+                            Spacer()
+                            Text(DateFormatter.shortDateForm.string(from: goal.startDate))
+                                .background(GeometryGetter(rect: $textHeight))
+                        }
+                        .font(.footnote)
+                        
+                        
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(.clear)
+                            .border(.cyan)
+                            .frame(height: geometry.frame(in: .global).height - textHeight)
+                            .overlay {
+                                Text(goal.title)
+                                    .font(.title)
+                            }
+                    }
+                    .containerRelativeFrame(.vertical, count: 10, span: 10, spacing: 0)
+                }
             }
         }
         .padding()

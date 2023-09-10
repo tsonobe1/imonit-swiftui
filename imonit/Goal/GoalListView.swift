@@ -57,6 +57,7 @@ struct GoalList: View {
 
                 }
             }
+            
         }
         
         .sheet(isPresented: $isSheetPresented) {

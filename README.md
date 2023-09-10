@@ -1,122 +1,128 @@
-Translated by chatGPT
-
-[日本語](https://github.com/tsonobe1/imonit-swiftui/blob/main/README.ja.md)
 # imonit
 
-## Overview
-In development of a calendar app using SwiftUI.
+## 概要
+SwiftUIでカレンダーアプリを作成中
 
-## Current
-![Simulator Screen Recording - iPhone 14 Pro - 2023-09-02 at 21 51 33](https://github.com/tsonobe1/SwiftUIPlayGround/assets/40202387/09aab5d3-5c2f-49da-8fb0-ecf638a670d0)
+## 現在の状況　2023/09/10
+![Simulator Screen Recording - iPhone 14 Pro - 2023-09-10 at 17 05 20](https://github.com/tsonobe1/imonit-swiftui/assets/40202387/7e773433-87db-498c-9220-1badb85daf37)
 
-### Target
-Me
+### ターゲット
+私
 
-### Features
-- Create and overview goals
-- Break down goals into smaller tasks
-- Create schedules (specific times within a day) for goals
-- Add multiple tasks to a schedule
+### 機能
+- 目標を作成・俯瞰できる
+- 目標を細分化できる
+- 目標にスケジュール（1日の中の特定の時刻）を作成できる（タイムボクシング）
+- スケジュールに複数のタスク（スケジュールの時間帯に具体的に行うこと）を作成できる
+- タスクが終わったら指で黒塗りして削除！
 
-### Screens
-- Goal View: Screen to manage goals
-- Calendar View: A screen for managing schedules and tasks, similar in functionality to iOS calendar view
+### 画面
+- Goal View : 目標を管理する画面, 目標を細分化する機能
+- Calendar View : iosのカレンダービューのような操作感でスケジュール・タスクの管理をする画面。タイムボクシングがし易いUX
 
 ---
+### インタビュー：自身のカレンダーアプリに対する意見
 
-### Interview: Insights Gained from Self-Questioning
+- **現在のスケジュール管理の方法**
+  - カレンダーアプリでスケジュールを管理し、アラーム通知も活用している。
 
-- **Current method of schedule management**
-  - Managing schedules using a calendar app and utilizing alarm notifications.
+- **困難点および不満点**
+  - 現在のカレンダーアプリでは、目標とそれに関連するタスクの関連性が不明確である。
+  - 目標を細分化して日々のタスクに映する際、関連性が失われてしまう。
+  - 長期的な目標の管理が困難
 
-- **Challenges and Points of Dissatisfaction**
-  - The current calendar app does not make the relationship between goals and corresponding tasks clear.
-  - When breaking down goals into daily tasks, the relation between them gets lost.
-  - Difficulty in managing long-term goals
+- **必要な機能および要件**
+  - 大きな目標を細分化できる機能が必要で、それらの関連性を視覚的に把握できる機能。
+  - 長期的なスケジュールを俯瞰的に表示し、目標達成までの日数や時間の経過を把握できること
+  - 目標のための行動をスケジュールできること
+  - スケジュールした時間帯にやるべき細かなことを定義しておけること
 
-- **Necessary Features and Requirements**
-  - Ability to break down large goals and visualize their relations.
-  - A bird’s eye view of long-term schedules and understanding the progression of time and days towards achieving the goal.
-  - Scheduling tasks for a goal
 
 ### Pain Points
-1. The relationship between goals and tasks is unclear, making effective goal achievement difficult.
-2. Long-term goal management and daily task management are disjointed, making it hard to have an overview.
-3. Current calendar apps do not allow for breaking down goals, making the path to achieving them unclear.
-4. Task prioritization and progress tracking are cumbersome, making efficient task management difficult.
-5. There is a risk of missing important tasks or schedules as the notification feature is inadequate.
-6. Lack of flexibility in schedules makes adjustments and changes difficult.
-7. Time and progress towards goal achievement are not clear, making it hard to maintain motivation.
 
-### User Stories
-1. Want to clearly understand the relationship between long-term goals, related tasks, and TODOs, to maintain focus and motivation.
-2. Want a comprehensive schedule view that includes short-term and long-term goals to effectively plan and prioritize tasks.
-3. Want to break down long-term goals into smaller milestones and tasks and reflect them in daily schedules for effective progress tracking.
-4. Want to receive notifications and reminders related to goals and tasks for organized task management and deadline adherence.
-5. Want a user-friendly interface that allows easy navigation across different levels of goals and tasks. A visual display of overall progress and timeline helps in having a clear understanding and maintaining motivation.
+1. 目標とタスクの関連性が不明確であり、効果的な目標達成が困難である。
+2. 長期的な目標の管理と日々のタスク管理が分断されており、総合的なスケジュールの俯瞰が難しい。
+3. カレンダーアプリでは目標やタスクの細分化ができず、目標達成までの道のりが見えにくい。
+4. タスクの優先順位設定と進捗管理が煩雑であり、効率的なタスク管理が困難である。
+5. 目標達成までの時間や進捗がわかりにくく、モチベーションの維持が困難である。
 
-### User Journey Map: Experience of Using the Schedule Management App
-Based on the experience of a user named X who values scheduling.
+### ユーザーストーリー
 
-1. **Goal Setting and Calendar View Overview**
-   - X logs into the schedule management app and sets their long-term goals.
-   - X opens the app’s calendar view to get an overview of the entire goal landscape.
-   - Goals are broadly represented in the calendar view, with related sub-goals and tasks being collapsible.
+1. 長期目標とそれに関連するタスクやTODOの関連性を明確に把握したい。これによって集中力とモチベーションを維持できる。
+2. 短期および長期の目標を含む包括的なスケジュールビューを持ちたい。これによってタスクを効果的に計画し、優先順位を付けられる。
+3. 長期目標をより小さなマイルストーンに分割し、日々のスケジュールに反映できるようにしたい。これによって進捗を追跡し、目標達成に向けた適切な進行ができる。
+4. 目標とタスクのように異なるレベルを容易に移動できる、ユーザーフレンドリーなインターフェイスを望む。全体的な進捗とタイムラインが視覚的に表示されることで、スケジュールを明確に把握し、モチベーションを維持できる。
 
-2. **Goal Breakdown and Task Setting**
-   - X breaks down long-term goals into specific tasks and milestones.
-   - Using the app’s goal management feature, X sets tasks and deadlines related to each goal.
-   - Goals and tasks are reflected in the calendar view while maintaining their relation.
 
-3. **Daily Task Management and Progress Tracking**
-   - X adds daily tasks and schedules into the app’s task list.
-   - Tasks are linked to goals and sub-goals and are reflected in the calendar view.
-   - X inputs the progress and visualizes the advancement towards goal achievement.
+### ユーザージャーニーマップ：スケジュール管理アプリの使用体験
 
-4. **Receiving Notifications and Reminders**
-   - The app sends notifications and reminders related to goal deadlines and important tasks.
-   - X receives the notifications and adjusts task priorities and schedules for deadline adherence.
+このマップは、スケジューリングを重視するXさんの体験を想定
 
-5. **Progress Check and Review**
-   - X regularly checks the app’s progress dashboard to review goal achievement and progress status.
-   - X gains satisfaction from completed tasks and goals and moves on to the next steps or challenges.
+1. **目標の設定とカレンダービューの俯瞰**
+   - Xさんは、スケジュール管理アプリにログインし、自身の長期的な目標を設定する。
+   - アプリのカレンダービューを開き、目標の全体像をや１週間、１日のスケジュールを俯瞰して確認する。
+   - カレンダービューには、目標が大まかに表示され、それに関連するサブゴールやタスクが折りたたまれて表示される。
+
+2. **目標の細分化とタスクの設定**
+   - Xさんは、長期的な目標を細分化し、具体的なタスクやマイルストーンに分割する。
+   - アプリの目標管理機能を使用し、それぞれの目標に関連するタスクや期限を設定する。
+   - 目標とタスクは、関連性を保ちながらカレンダービューに反映される。
+
+3. **日々のタスク管理と進捗追跡**
+   - Xさんは、毎日のタスクや予定をアプリのタスクリストに追加する。
+   - タスクは目標やサブゴールと関連付けられ、カレンダービューに反映される。
+   - タスクの進捗状況を入力し、目標達成までの進捗を可視化する。
+
+4. **通知とリマインダーの受け取り**
+   - アプリは、目標の期限や重要なタスクの締切などに関する通知やリマインダーを送信する。
+   - Xさんは、通知を受け取りながらタスクの優先順位を調整し、締切を守るためにスケジュールを調整する。
+
+5. **進捗の確認と振り返り**
+   - Xさんは、定期的にアプリの進捗ダッシュボードをチェックし、目標の達成度や進捗状況を確認する。
+   - 達成したタスクや目標に対して満足感を得るとともに、次のステップや課題に取り組む。
+
 
 ### Problem Statement
-X is facing challenges in effective goal achievement and task management due to unclear relations and overview in their current schedule management method. X seeks to use the schedule management app to clearly understand the relations between goals and tasks and to track progress.
+
+Xさんは、現在のスケジュール管理方法では長期的な目標とタスクの関連性や俯瞰が不明確であり、効果的な目標達成やタスク管理に課題を抱えている。
+Xさんは、スケジュール管理アプリを利用して目標とタスクの関連性を明確に把握し、進捗を追跡できるようにすることを求めている。
 
 ### Hypothesis Statement
-By enabling users to clearly understand the relationship between long-term goals and tasks in the schedule management app, it is predicted that effective goal achievement and task management will improve, thereby increasing user productivity.
+
+ユーザーがスケジュール管理アプリで長期的な目標とタスクの関連性を明確に把握できるようにすることで、効果的な目標達成とタスク管理が向上し、ユーザーの生産性が向上すると予測される。
 
 ### Design Problem Statements
 
-1. Even when using a schedule management app, users struggle to clearly understand the relationship between goals and tasks, making effective goal achievement and task management difficult.
-2. Existing schedule management apps keep long-term goal management and daily task management disjointed, making it hard to have an overview.
-3. The notification feature in existing schedule management apps is inadequate, posing a risk for users to miss important tasks or schedules.
-4. Users find task prioritization and progress tracking to be complex and cumbersome, even when using a schedule management app.
+1. ユーザーはスケジュール管理アプリを使用しても、目標とタスクの関連性を明確に把握できず、効果的な目標達成とタスク管理が困難である。
+2. 現行のスケジュール管理アプリでは、長期的な目標の管理と日々のタスク管理が分断されており、総合的なスケジュールの俯瞰が難しいという問題がある。
+3. ユーザーはスケジュール管理アプリを使用しても、タスクの優先順位設定や進捗状況の追跡が複雑で煩雑であり、効率的なタスク管理が困難である。
 
 ### Value Proposition
 
-This schedule management app provides a unique feature that allows users to clearly understand the relationship between long-term goals and tasks, thus supporting effective goal achievement and task management. The following features aim to improve user productivity:
+このスケジュール管理アプリは、長期的な目標とタスクの関連性を明確に把握できる独自の機能を提供し、効果的な目標達成とタスク管理をサポートする。以下の特徴により、ユーザーの生産性を向上させる。
 
-1. **Goal Granulation and Task Relation Display:**
-   - Allows the segmentation of long-term goals into gradual steps and clearly displays related tasks.
-   - Users can break down large goals into smaller tasks and monitor real-time progress towards goal achievement.
+1. **目標の細分化とタスクの関連性表示:**
+   - 長期的な目標を段階的に細分化し、関連するタスクを明確に表示する。
+   - ユーザーは大きな目標を小さなタスクに分割し、目標達成に向けた進捗をリアルタイムで把握できる。
 
-2. **Integrated Calendar View:**
-   - The calendar view incorporates goals and tasks (performance-dependent).
-   - Users can easily manage their long-term schedule and daily tasks at a glance.
+2. **統合されたカレンダービュー:**
+   - カレンダービューには、目標やタスクが統合されて表示される。
+   - ユーザーは長期的なスケジュールと日々のタスクを一目で確認でき、予定の管理が容易である。
+   - ユーザはスケジュールの中にタスクを定義できる（タイムボクシング）ため効果的なスケジュール管理ができる
 
-3. **Reminder and Notification Feature:**
-   - Provides reminders and notifications for important tasks and schedules.
-   - Users can keep track of easily overlooked schedules and deadlines without forgetting them.
 
-## Wireframe
+## ワイヤーフレーム
 <img width="1425" alt="image" src="https://github.com/tsonobe1/SwiftUIPlayGround/assets/40202387/9c53f031-ad4d-4c59-b5be-7440013ef948">
 
-## Languages
 
-- Language: Swift
-- Framework: SwiftUI
 
-## Planned Features
+## 言語
+
+- 言語: Swift
+- フレームワーク: SwiftUI
+
+
+## 作成予定の機能
 ...
+
+

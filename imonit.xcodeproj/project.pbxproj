@@ -118,10 +118,18 @@
 			path = Goal;
 			sourceTree = "<group>";
 		};
+		0CDAA0AA2AADB16600456A5A /* DevGifLog */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DevGifLog;
+			sourceTree = "<group>";
+		};
 		0CDAACEE2A8A56B600520D8A = {
 			isa = PBXGroup;
 			children = (
 				0C74ED1F2AA3553300957167 /* README.md */,
+				0CDAA0AA2AADB16600456A5A /* DevGifLog */,
 				0CDAAD292A8BA56E00520D8A /* SampleData.swift */,
 				0CB8586F2AA739EA00F91550 /* Model.swift */,
 				0CDAA0A32AAC063000456A5A /* Models.swift */,
