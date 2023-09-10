@@ -8,6 +8,8 @@ SwiftUIでカレンダーアプリを作成中
 
 ### 過去のGif
 https://github.com/tsonobe1/imonit-swiftui/blob/main/DevGifLog/DevGif.md
+Calenderを作るときは、使い回せれば以下を参考に
+https://github.com/tsonobe1/DailyCalender
 
 ### ターゲット
 私
