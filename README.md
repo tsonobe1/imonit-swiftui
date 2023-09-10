@@ -30,6 +30,7 @@ https://github.com/tsonobe1/DailyCalender
 - Calendar View : iosのカレンダービューのような操作感でスケジュール・タスクの管理をする画面。タイムボクシングがし易いUX
 
 ---
+Created by ChatGPT
 ### インタビュー：自身のカレンダーアプリに対する意見
 
 - **現在のスケジュール管理の方法**
