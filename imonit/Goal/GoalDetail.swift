@@ -6,19 +6,21 @@
 //
 
 import SwiftUI
-
+import SwiftData
 
 struct GoalDetail: View {
     @Environment(\.modelContext) private var context
     let goal: Goal
-    let sampleTitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-    let sampleDetail = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
+ 
     
     @State private var isExpandedDisclosure = true
-    @State private var isSheetPresented = false
+    @State private var isEditSheetPresented = false
+    @State private var isDeleteSheetPresented = false
     private var progress: Double {
         calculateDateProgress(startDate: goal.startDate, endDate: goal.endDate, currentDate: Date())
     }
+    
+    
     
     var body: some View {
         ScrollView{
@@ -40,24 +42,39 @@ struct GoalDetail: View {
                 details
                 
                 // ⛳️MARK: Children = subGoal
-                subGoal
-            }
-        }
-        .toolbar{
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    isSheetPresented.toggle()
-                } label: {
-                    Image(systemName: "plus")
-                }
-
+                SubGoal(goal: goal)
             }
         }
         .padding(5)
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $isSheetPresented) {
-            AddGoel(parent: goal)
+        // MARK: Edit, Delete
+        .toolbar{
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    isEditSheetPresented.toggle()
+                } label: {
+                    Image(systemName: "pencil")
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    isDeleteSheetPresented.toggle()
+                } label: {
+                    Image(systemName: "trash")
+                }
+                
+            }
         }
+        // TODO: edit
+        .sheet(isPresented: $isEditSheetPresented) {
+            Text("EDIT")
+        }
+        .alert("Delete", isPresented: $isDeleteSheetPresented) {
+            Button("Delete") {context.delete(goal)}
+            Button("Cancel") {isDeleteSheetPresented.toggle()}
+        }
+        
+       
     }
     
     private var dateProgress: some View {
@@ -126,31 +143,14 @@ struct GoalDetail: View {
                 .opacity(isExpandedDisclosure ? 1 : 0)
         )
     }
-    private var subGoal: some View {
-        VStack(alignment: .leading){
-            // Headline
-            HStack(alignment: .lastTextBaseline){
-                Image(systemName: "figure.stairs")
-                Text("SubGoal")
-                    .font(.headline)
-            }
-            
-            // SubGoals
-            ScrollView{
-                ForEach(goal.children){ child in
-                    ChildRow(child: child)
-                }
-                Spacer(minLength: 10)
-            }
-            
-            // TODO: I will delete
-            Button("add"){
-                let new = Goal(id: UUID(), title: sampleTitle, detail: sampleDetail, startDate: Date(), endDate: Date(), createdData: Date(), parent: nil)
-                new.parent = goal
-                goal.children.append(new)
-            }
-        }
-    }
+    
+    
+
+
+    
+    
+    
+
     private var parentPath: some View {
         Text(generateParentPath(for: goal))
             .font(.footnote)
@@ -174,6 +174,94 @@ struct GoalDetail: View {
     }
 }
 
+
+
+#Preview {
+    GoalList()
+        .modelContainer(for: Goal.self)
+}
+
+
+struct SubGoal: View {
+    @Environment(\.modelContext) private var context
+    let goal: Goal
+    
+    @Query(sort: \Goal.startDate, order: .forward)
+    var children: [Goal]
+    
+    init(goal: Goal) {
+        
+//        self._children = Query(
+//            filter: #Predicate<Goal> { $0.parent?.id == goal.id },
+//            sort: \Goal.startDate
+//        )
+        self.goal = goal
+        let goalID = goal.id
+        let filter = #Predicate<Goal> { goal in
+            goal.parent?.id == goalID
+        }
+        let query = Query(filter: filter, sort: \.startDate)
+        _children = query
+    }
+    
+    @State private var isTimelinePresented = false
+    @State private var isAddSheetPresented = false
+    
+    func printChild(children: [Goal]){
+        print("children count: \(children.count)")
+    }
+
+    var body: some View {
+        VStack(alignment: .leading){
+            // Headline
+            HStack(alignment: .lastTextBaseline){
+                Image(systemName: "figure.stairs")
+                Text("SubGoal")
+                    .font(.headline)
+                
+                Button {
+                    isTimelinePresented.toggle()
+                } label: {
+                    Image(systemName: "calendar.day.timeline.left")
+                }
+                
+                Button {
+                    isAddSheetPresented.toggle()
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+            
+            // SubGoals
+            ScrollView{
+                ForEach(children){ child in
+//                    let _ = print("\(child.title) + last ? \(String(describing: child.parent?.children.last))")
+                    ChildRow(child: child, isLast: children.last?.id == child.id)
+                }
+                Spacer(minLength: 10)
+            }
+            
+            // TODO: I will delete
+            Button("add"){
+                let new = Goal(id: UUID(), title: sampleTitle, detail: sampleDetail, startDate: Date(), endDate: Date(), createdData: Date(), parent: nil)
+                new.parent = goal
+                goal.children.append(new)
+            }
+        }
+        
+        
+        .sheet(isPresented: $isAddSheetPresented) {
+            AddGoel(parent: goal)
+        }
+        .sheet(isPresented: $isTimelinePresented) {
+                   GoalTimeline(goal: goal)
+               }
+    }
+    
+    let sampleTitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+    let sampleDetail = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
+}
+
 struct ChildRow: View {
     @Environment(\.colorScheme) var colorScheme
     let child: Goal
@@ -181,17 +269,37 @@ struct ChildRow: View {
     private var progress: Double {
         calculateDateProgress(startDate: child.startDate, endDate: child.endDate, currentDate: Date())
     }
+    
+    @Query(sort: \Goal.startDate, order: .forward)
+    var grandChildren: [Goal]
+    let isLast: Bool
+    
+    init(child: Goal, isLast: Bool) {
+            self.child = child
+            let childID = child.id
+            let filter = #Predicate<Goal> { grandChild in
+                grandChild.parent?.id == childID
+            }
+            let query = Query(filter: filter, sort: \.startDate)
+        _grandChildren = query
+        
+        self.isLast = isLast
+        }
+    
+    
     var body: some View {
         VStack(alignment: .leading,  spacing: 0){
             subGoalRow
-            siblingConnector
+            parentChildConnector
             nestedSubGoal
         }
-        .background(parentChildConnector)
+        .background(siblingConnector)
     }
     
     private var subGoalRow: some View {
         HStack{
+//             let _ = print("Current children: \(child.parent?.children ?? [])")
+
             NavigationLink {
                 GoalDetail(goal: child)
             } label: {
@@ -248,7 +356,7 @@ struct ChildRow: View {
     }
     private var nestedSubGoalExpand: some View{
         Group{
-            if !child.children.isEmpty {
+            if !grandChildren.isEmpty {
                 Image(systemName: "chevron.right")
                     .rotationEffect(.degrees(isExpanded ? 90 : 0))
                     .font(.system(size: 15))
@@ -262,28 +370,33 @@ struct ChildRow: View {
             }
         }
     }
-    private var siblingConnector: some View {
+    private var parentChildConnector: some View {
            Rectangle()
                .frame(width: 3)
-               .opacity(child.children.isEmpty || !isExpanded ? 0 : 0.8)
-               .foregroundColor(.gray)
+               .opacity(grandChildren.isEmpty || !isExpanded ? 0 : 0.8)
+               .foregroundColor(Color.secondary)
+               .opacity(0.6)
                .padding(.leading)
                .offset(x: 5)
        }
     private var nestedSubGoal: some View {
         VStack(spacing: 0){
             if isExpanded {
-                ForEach(child.children) { child in
-                    ChildRow(child: child)
+                ForEach(grandChildren) { grandChild in
+                    ChildRow(child: grandChild, isLast: grandChildren.last?.id == grandChild.id)
                         .padding(.leading)
                 }
             }
         }
     }
-    private var parentChildConnector: some View{
-        Rectangle()
-            .fill(.gray)
-            .opacity(child.parent?.children.last == child ? 0 : 0.8)
+    private var siblingConnector: some View{
+//        let isLast = (child.parent?.children.last == child)
+//            print("Is last: \(isLast), Parent children last: \(String(describing: child.parent?.children.last)), Child: \(child)")
+        
+        return Rectangle()
+            .fill(Color.secondary)
+//            .opacity(child.parent?.children.last == child ? 0 : 0.8)
+            .opacity(isLast ? 0 : 0.8)
             .mask(    // << here !!
                 HStack {
                     Rectangle()
@@ -293,9 +406,4 @@ struct ChildRow: View {
                 })
     }
 
-}
-
-#Preview {
-    GoalList()
-        .modelContainer(for: Goal.self)
 }

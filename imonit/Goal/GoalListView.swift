@@ -103,7 +103,8 @@ struct AddGoel: View {
                         }else{
                             let newGoal = Goal(id: UUID(), title: title, detail: detail, startDate: startDate, endDate: endDate, createdData: Date(), parent: parent)
                             
-                            parent?.children.append(newGoal)
+                            context.insert(newGoal)
+//                            parent?.children.append(newGoal)
                         }
                         dismiss()
                     }
