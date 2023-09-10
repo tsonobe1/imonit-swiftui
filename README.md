@@ -6,6 +6,9 @@ SwiftUIでカレンダーアプリを作成中
 ## 現在の状況　2023/09/10
 ![Simulator Screen Recording - iPhone 14 Pro - 2023-09-10 at 17 05 20](https://github.com/tsonobe1/imonit-swiftui/assets/40202387/7e773433-87db-498c-9220-1badb85daf37)
 
+### 過去のGif
+https://github.com/tsonobe1/imonit-swiftui/blob/main/DevGifLog/DevGif.md
+
 ### ターゲット
 私
 
