@@ -69,13 +69,16 @@ struct GoalDetail: View {
         .sheet(isPresented: $isEditSheetPresented) {
             Text("EDIT")
         }
-        .alert("Delete", isPresented: $isDeleteSheetPresented) {
-            Button("Delete") {
+        .alert("\(goal.title)を削除しますか？", isPresented: $isDeleteSheetPresented) {
+            //            Button("Cancel") {isDeleteSheetPresented.toggle()}
+            Button("Delete", role: .destructive) {
                 context.delete(goal)
                 self.presentationMode.wrappedValue.dismiss()
-            }
-            Button("Cancel") {isDeleteSheetPresented.toggle()}
-        }
+            } 
+        } 
+        //    message: {
+        //            Text("データが削除されますが、よろしいですか？")
+        //        }
     }
     
     private var dateProgress: some View {
@@ -228,6 +231,7 @@ struct SubGoal: View {
         }
         .sheet(isPresented: $isTimelinePresented) {
             GoalTimeline(goal: goal)
+            let _ = print(goal.children)
         }
     }
     
@@ -279,7 +283,6 @@ struct ChildRow: View {
                         .font(.footnote)
                         .lineLimit(2)
                         .multilineTextAlignment(.leading)
-                    
                     dateProgress
                 }
                 .foregroundStyle(colorScheme == .dark ? .white : .black)
@@ -346,7 +349,6 @@ struct ChildRow: View {
                .frame(width: 3)
                .opacity(grandChildren.isEmpty || !isExpanded ? 0 : 0.8)
                .foregroundColor(Color.secondary)
-               .opacity(0.6)
                .padding(.leading)
                .offset(x: 5)
        }

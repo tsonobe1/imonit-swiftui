@@ -6,14 +6,19 @@ SwiftUIでカレンダーアプリを作成中
 ## 現在の状況　2023/09/10
 ![Simulator Screen Recording - iPhone 14 Pro - 2023-09-10 at 17 05 20](https://github.com/tsonobe1/imonit-swiftui/assets/40202387/7e773433-87db-498c-9220-1badb85daf37)
 
-### 過去のGif
-https://github.com/tsonobe1/imonit-swiftui/blob/main/DevGifLog/DevGif.md
+### 2023-09-02
+![Simulator Screen Recording - iPhone 14 Pro - 2023-09-02 at 21 51 33](https://github.com/tsonobe1/SwiftUIPlayGround/assets/40202387/09aab5d3-5c2f-49da-8fb0-ecf638a670d0)
+
 
 Calenderを作るときは、使い回せれば以下を参考に
 https://github.com/tsonobe1/DailyCalender
 ![Simulator Screen Recording - 14 - 2023-09-02 at 20 19 42](https://github.com/tsonobe1/DailyCalender/assets/40202387/1f3cbbb5-c698-41e7-af41-d77753f59a18)
 ![Simulator Screen Recording - 14 - 2023-09-02 at 20 19 42](https://github.com/tsonobe1/DailyCalender/assets/40202387/1c89bd15-ba26-4664-99bf-29a23ad2a230)
 ![Simulator Screen Recording - 14 - 2023-09-02 at 20 18 56](https://github.com/tsonobe1/DailyCalender/assets/40202387/006b6174-8343-4366-8213-1a996db97dee)
+
+https://github.com/tsonobe1/imonit
+![Simulator Screen Recording - iPhone 14 Pro - 2023-09-12 at 12 47 24](https://github.com/tsonobe1/imonit/assets/40202387/18e3a849-e433-4e9a-a155-fb11d143400b)
+
 
 ### ターゲット
 私

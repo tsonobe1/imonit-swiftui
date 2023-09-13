@@ -98,14 +98,14 @@ struct AddGoel: View {
                 Section {
                     Button("add") {
                         if parent == nil {
-                            
                             let newGoal = Goal(id: UUID(), title: title, detail: detail, startDate: startDate, endDate: endDate, createdData: Date(), parent: nil)
                             context.insert(newGoal)
                         }else{
                             let newGoal = Goal(id: UUID(), title: title, detail: detail, startDate: startDate, endDate: endDate, createdData: Date(), parent: parent)
                             
-                            context.insert(newGoal)
-//                            parent?.children.append(newGoal)
+//                            context.insert(newGoal)
+                            parent?.children.append(newGoal)
+
                         }
                         dismiss()
                     }
