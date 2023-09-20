@@ -17,6 +17,10 @@ struct CalendarWeeklyView: View {
     
     let currentDate = Date() // 現在の日付を取得
     @State var dateList: [Date] = []
+    @State var selectedMonth: Date = Date()
+    var dateOfMonth: [Date] {
+     generateDatesOfMonth(selectedMonth: selectedMonth)!
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0){
@@ -58,10 +62,27 @@ struct CalendarWeeklyView: View {
                 .containerRelativeFrame(.horizontal, count: 10, span: 9, spacing: 0)
             }
             .onAppear {
-                // 今日を中心に前後10日（合計20日）の日付リストを作成
-                for i in -10...10 {
-                    if let newDate = Calendar.current.date(byAdding: .day, value: i, to: currentDate) {
-                        dateList.append(newDate)
+                let _ = print("appear!!!!!")
+                let calendar = Calendar.current
+                
+                // 今日が含まれる月の初日を求める
+                if let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: calendar.startOfDay(for: currentDate))) {
+                    
+                    // 月の最終日を求める
+                    if let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth) {
+                        
+                        // 月の初日から最終日まで日付をリストに追加
+                        var currentDate = startOfMonth
+                        while currentDate <= endOfMonth {
+                            dateList.append(currentDate)
+                            
+                            // 次の日に移動（失敗した場合はループを終了）
+                            if let nextDate = calendar.date(byAdding: .day, value: 1, to: currentDate) {
+                                currentDate = nextDate
+                            } else {
+                                break
+                            }
+                        }
                     }
                 }
             }
@@ -98,7 +119,7 @@ struct DateRowHeader: View {
                     .bold()
             }
         }
-        .foregroundStyle(day == currentDate ? .red : .primary)
+        .foregroundStyle(Calendar.current.isDate(day, equalTo: currentDate, toGranularity: .day) ? .red : .primary)
         .frame(height: headerHeight)
         .containerRelativeFrame(.horizontal, count: 7, span: 3, spacing: 0)
     }
@@ -163,13 +184,29 @@ struct ScheduleTable: View {
     var headerHeight: CGFloat
     var hourHeight: CGFloat
     let currentDate: Date
+    var positionInCurrentMonth: CGFloat? {
+        if let datePosition = currentDate.positionInCurrentMonth() {
+            datePosition
+        } else {
+            nil
+        }
+    }
+    var positionInCurrentDay: CGFloat?{
+        if let position = currentDate.positionInCurrentDay() {
+            position
+        } else {
+            nil
+        }
+    }
     
     var body: some View {
         ScrollView([.horizontal, .vertical], showsIndicators: false) {
             LazyHStack(alignment: .top, spacing: 0) {
+                
                 ForEach(dateList, id: \.self) { day in
                     TableView(dateList: $dateList, day: day, hourHeight: hourHeight)
                 }
+                
             }
             .overlay(alignment: .topLeading){
                 currentTimeDivider
@@ -187,7 +224,7 @@ struct ScheduleTable: View {
             }
             
         }
-        .defaultScrollAnchor(.top)
+        .defaultScrollAnchor(.some(UnitPoint(x: positionInCurrentMonth ?? 0, y: positionInCurrentDay ?? 0)))
         .scrollTargetBehavior(.viewAligned(limitBehavior: .always))
         //TODO: scrollPositionを使うと横スクロールの挙動がバグるのでひとまず無効にしておく
         //        .scrollPosition(id: $scrollPosition)
@@ -219,7 +256,7 @@ struct TableView: View {
     var hourHeight: CGFloat
     
     var body: some View {
-        let _ = Self._printChanges()
+//        let _ = Self._printChanges()
         
         VStack(alignment: .leading, spacing: 0) {
             ForEach(0...23, id: \.self) { hour in
@@ -239,12 +276,12 @@ struct TableView: View {
                 Rectangle()
                     .frame(width: 1)
             }
-            .opacity(0.3)
+            .opacity(0.2)
         }
         .frame(height: hourHeight)
         .containerRelativeFrame(.horizontal, count: 7, span: 3, spacing: 0)
         .id("\(hour)_\(day)")
-        .onAppear{ handleItemAppearance(item: day) }
+//        .onAppear{ handleItemAppearance(item: day) }
     }
     
     func scheduleBoxes() -> some View {
@@ -298,10 +335,16 @@ struct TableView: View {
     /// Handles the appearance of a new item in the date list.
     /// - Parameter item: The date item that appeared.
     private func handleItemAppearance(item: Date) {
-        if item == dateList.last {
-            updateDateList(byAdding: 1)
-        } else if item == dateList.first {
-            updateDateList(byAdding: -1)
+        Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { (t) in
+            DispatchQueue.main.async {
+                
+                if item == dateList.last {
+                    updateDateList(byAdding: 1)
+                } else if item == dateList.first {
+                    updateDateList(byAdding: -1)
+                    
+                }
+            }
         }
     }
     

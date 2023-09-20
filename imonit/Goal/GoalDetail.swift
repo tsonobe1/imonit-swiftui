@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 
+@available(macOS 14.0, *)
 struct GoalDetail: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Environment(\.modelContext) private var context
@@ -171,6 +172,7 @@ struct GoalDetail: View {
 }
 
 
+@available(macOS 14.0, *)
 struct SubGoal: View {
     @Environment(\.modelContext) private var context
     let goal: Goal
@@ -227,7 +229,7 @@ struct SubGoal: View {
             }
         }
         .sheet(isPresented: $isAddSheetPresented) {
-            AddGoel(parent: goal)
+            GoelAdd(parent: goal)
         }
         .sheet(isPresented: $isTimelinePresented) {
             GoalTimeline(goal: goal)
@@ -378,6 +380,8 @@ struct ChildRow: View {
 
 
 #Preview {
-    GoalList()
-        .modelContainer(for: Goal.self)
+    
+        GoalList()
+            .modelContainer(for: Goal.self)
+    
 }
