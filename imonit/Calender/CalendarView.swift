@@ -11,7 +11,11 @@ struct CalendarView: View {
     @State private var selectedOption: CalendarOption = .daily
     @State private var selectedDate: Date = Date() // Current date by default
 
-
+    let currentDate: Date = Date()
+    @State var selectedMonth: Date = Date()
+    var dateOfMonth: [Date] {
+        generateDatesOfMonth(selectedMonth: selectedMonth)!
+    }
     
     enum CalendarOption: String, CaseIterable {
         case daily = "Daily"
@@ -19,50 +23,53 @@ struct CalendarView: View {
         case monthly = "Monthly"
         case yearly = "Yearly"
     }
+    @State private var selectedCalender: CalendarOption = .weekly
+
     var body: some View {
         
-        VStack{
+        VStack(alignment: .trailing){
             Group {
-                HStack(spacing: 0){
-                    // Switch CalenderViews
-                    Picker("Select a time interval", selection: $selectedOption) {
+                HStack(alignment: .center, spacing: 0){
+                    Spacer()
+                    
+                    Picker("Select a time interval", selection: $selectedCalender) {
                         ForEach(CalendarOption.allCases, id: \.self) { option in
                             Text(option.rawValue).tag(option)
                         }
                     }
-                    .pickerStyle(.segmented)
-                    .padding(.trailing)
+                    .containerRelativeFrame(.horizontal, count: 10, span: 5, spacing: 0)
+                    .pickerStyle(.menu)
                     
-                    // Search Schedules
-                    Button(action: {}) {
-                        Image(systemName: "magnifyingglass")
-                            .padding(.horizontal,10)
+                    HStack{
+                        // Search Schedules
+                        Button(action: {}) {
+                            Image(systemName: "magnifyingglass")
+                                .font(.title2)
+                                .padding(.horizontal,10)
+                        }
+                        
+                        // Add New Schedules
+                        Button(action: {}) {
+                            Image(systemName: "plus")
+                                .font(.title2)
+                                .padding(.horizontal,10)
+                        }
                     }
-                    
-                    
-                    // Add New Schedules
-                    Button(action: {}) {
-                        Image(systemName: "plus.circle")
-                            .padding(.horizontal,10)
-                    }
-                    
+                    .containerRelativeFrame(.horizontal, count: 10, span: 2, spacing: 0)
                 }
                 .padding(.horizontal)
             }
             
-            switch selectedOption {
+            switch selectedCalender {
             case .daily:
                 CalendarDailyView(selectedDate: $selectedDate)
             case .weekly:
-                CalendarWeeklyView()
+                CalendarWeeklyView(currentDate: currentDate, selectedMonth: $selectedMonth, dateOfMonth: dateOfMonth)
             case .monthly:
                 Text("Monthly View")
             case .yearly:
                 Text("Yearly View")
             }
-            
-            Spacer()
-            
         }
     }
 }
