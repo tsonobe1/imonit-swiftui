@@ -14,6 +14,12 @@ extension DateFormatter {
         return formatter
     }
     
+    static var yearFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        return formatter
+    }
+    
     static var monthFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM"
@@ -158,4 +164,24 @@ func generateDatesOfMonth(selectedMonth: Date) -> [Date]? {
     }
     
     return dates
+}
+
+
+extension Date {
+    var firstDayOfNextMonth: Date? {
+        let calendar = Calendar.current
+        if let nextMonth = calendar.date(byAdding: .month, value: 1, to: self) {
+            return calendar.date(from: calendar.dateComponents([.year, .month], from: nextMonth))
+        }
+        return nil
+    }
+    
+    var lastDayOfPreviousMonth: Date? {
+        let calendar = Calendar.current
+        if let firstDayOfCurrentMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: self)),
+           let lastDayOfPreviousMonth = calendar.date(byAdding: .day, value: -1, to: firstDayOfCurrentMonth) {
+            return lastDayOfPreviousMonth
+        }
+        return nil
+    }
 }

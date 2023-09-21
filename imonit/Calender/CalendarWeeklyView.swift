@@ -10,20 +10,21 @@ import SwiftUI
 struct CalendarWeeklyView: View {
     let events = createEvents()
     
-    var hourHeight: CGFloat = 90
+    var hourHeight: CGFloat = 60
     var headerHeight: CGFloat = 60
 
+    
     @State private var offset = CGPoint.zero
     
-    let currentDate = Date() // 現在の日付を取得
-    @State var dateList: [Date] = []
-    @State var selectedMonth: Date = Date()
-    var dateOfMonth: [Date] {
-     generateDatesOfMonth(selectedMonth: selectedMonth)!
-    }
+    let currentDate: Date // 現在の日付を取得
+    @Binding var selectedMonth: Date
+    var dateOfMonth: [Date]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0){
+            MonthBar(selectedMonth: $selectedMonth)
+                .padding(.horizontal)
+            
             HStack(alignment: .top, spacing: 0) {
                 VStack(alignment: .leading, spacing: 0) {
                     Color.clear.frame(height: headerHeight)
@@ -43,7 +44,7 @@ struct CalendarWeeklyView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     ScrollView([.horizontal]) {
                         DateRowHeader(
-                            dateList: $dateList,
+                            dateOfMonth: dateOfMonth,
                             headerHeight: headerHeight,
                             currentDate: currentDate
                         )
@@ -51,54 +52,80 @@ struct CalendarWeeklyView: View {
                     }
                     .disabled(true)
                     ScheduleTable(
-                        dateList: $dateList,
+                        dateOfMonth: dateOfMonth,
                         offset: $offset,
                         headerHeight: headerHeight,
                         hourHeight: hourHeight,
-                        currentDate: currentDate
+                        currentDate: currentDate     
                     )
                     .coordinateSpace(.named("scroll"))
                 }
                 .containerRelativeFrame(.horizontal, count: 10, span: 9, spacing: 0)
             }
-            .onAppear {
-                let _ = print("appear!!!!!")
-                let calendar = Calendar.current
-                
-                // 今日が含まれる月の初日を求める
-                if let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: calendar.startOfDay(for: currentDate))) {
-                    
-                    // 月の最終日を求める
-                    if let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth) {
-                        
-                        // 月の初日から最終日まで日付をリストに追加
-                        var currentDate = startOfMonth
-                        while currentDate <= endOfMonth {
-                            dateList.append(currentDate)
-                            
-                            // 次の日に移動（失敗した場合はループを終了）
-                            if let nextDate = calendar.date(byAdding: .day, value: 1, to: currentDate) {
-                                currentDate = nextDate
-                            } else {
-                                break
-                            }
-                        }
+        }
+    }
+}
+
+struct MonthBar: View {
+    @Binding var selectedMonth: Date
+    
+    var body: some View {
+        HStack(alignment: .center){
+            Button(action: {
+                withAnimation(.easeIn){
+                    if let prevMonth = Calendar.current.date(byAdding: .month, value: -1, to: selectedMonth) {
+                        selectedMonth = prevMonth
                     }
                 }
+            }) {
+                HStack(alignment: .center){
+                    Image(systemName: "chevron.left")
+                    Text(DateFormatter.monthFormatter.string(from: Calendar.current.date(byAdding: .month, value: -1, to: selectedMonth)!))
+                }
+                .font(.title3)
+            }
+            Spacer()
+            
+            HStack{
+                Text(DateFormatter.monthFormatter.string(from: selectedMonth))
+                    .foregroundStyle(Calendar.current.isDate(Date(), equalTo: selectedMonth, toGranularity: .month) ? .cyan : .primary)
+                    .font(.title2)
+                
+                Text(DateFormatter.yearFormatter.string(from: selectedMonth))
+                    .foregroundStyle(Calendar.current.isDate(Date(), equalTo: selectedMonth, toGranularity: .year) ? .cyan : .primary)
+                    .font(.title)
+                    .bold()
+            }
+            .transition(.slide) 
+            
+            Spacer()
+            
+            Button(action: {
+                withAnimation(.easeIn)
+                {
+                    if let nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: selectedMonth) {
+                        selectedMonth = nextMonth
+                    }
+                }
+            }) {
+                HStack(alignment: .center){
+                    Text(DateFormatter.monthFormatter.string(from: Calendar.current.date(byAdding: .month, value: 1, to: selectedMonth)!))
+                    Image(systemName: "chevron.right")
+                }
+            .font(.title3)
             }
         }
     }
 }
 
-
 struct DateRowHeader: View {
-    @Binding var dateList: [Date]
+    var dateOfMonth: [Date]
     var headerHeight: CGFloat
     let currentDate: Date
     
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
-            ForEach(dateList, id: \.self) { day in
+            ForEach(dateOfMonth, id: \.self) { day in
                 // Daily
                 dateHeaderText(day: day)
                     .overlay(alignment: .bottomLeading){
@@ -109,8 +136,6 @@ struct DateRowHeader: View {
     }
     
     func dateHeaderText(day: Date) -> some View {
-        HStack(alignment: .lastTextBaseline , spacing: 5){
-            Text(DateFormatter.monthFormatter.string(from: day))
             VStack{
                 Text(DateFormatter.weekdayFormatter.string(from: day))
                     .font(.caption)
@@ -118,17 +143,17 @@ struct DateRowHeader: View {
                     .font(.title3)
                     .bold()
             }
-        }
-        .foregroundStyle(Calendar.current.isDate(day, equalTo: currentDate, toGranularity: .day) ? .red : .primary)
+        
+        .foregroundStyle(Calendar.current.isDate(day, equalTo: currentDate, toGranularity: .day) ? .cyan : .primary)
         .frame(height: headerHeight)
-        .containerRelativeFrame(.horizontal, count: 7, span: 3, spacing: 0)
+        .containerRelativeFrame(.horizontal, count: 7, span: 2, spacing: 0)
     }
     
     var dateHeaderBorder: some View{
         VStack(alignment: .leading, spacing: 0){
             Rectangle()
                 .frame(width: 1)
-                .opacity(0.3)
+                .opacity(0.2)
             Rectangle()
                 .frame(height: 1)
                 .opacity(0.2)
@@ -167,7 +192,7 @@ struct TimeColumnHeader: View {
             HStack(alignment: .center, spacing: 0){
                 Text("\(formatTime(from: currentDate))")
                     .font(.caption2)
-                    .foregroundStyle(.red)
+                    .foregroundStyle(.cyan)
                 Spacer()
             }
             .offset(y: hourHeight/4 + (proxy.frame(in: .global).height / 1440 * dateToMinute(date: currentDate)) - 7)
@@ -178,12 +203,13 @@ struct TimeColumnHeader: View {
 
 struct ScheduleTable: View {
     
-    @Binding var dateList: [Date]
+    var dateOfMonth: [Date]
     @Binding var offset: CGPoint
     
     var headerHeight: CGFloat
     var hourHeight: CGFloat
     let currentDate: Date
+    @State var scrollPosition: Date?
     var positionInCurrentMonth: CGFloat? {
         if let datePosition = currentDate.positionInCurrentMonth() {
             datePosition
@@ -199,14 +225,15 @@ struct ScheduleTable: View {
         }
     }
     
+    
     var body: some View {
+        GeometryReader { proxy in
+            let _ = print(proxy.frame(in: .named("table")).origin)
         ScrollView([.horizontal, .vertical], showsIndicators: false) {
             LazyHStack(alignment: .top, spacing: 0) {
-                
-                ForEach(dateList, id: \.self) { day in
-                    TableView(dateList: $dateList, day: day, hourHeight: hourHeight)
+                ForEach(dateOfMonth, id: \.self) { day in
+                    TableView(dateOfMonth: dateOfMonth, day: day, hourHeight: hourHeight)
                 }
-                
             }
             .overlay(alignment: .topLeading){
                 currentTimeDivider
@@ -219,28 +246,39 @@ struct ScheduleTable: View {
                 }
             )
             .onPreferenceChange(ViewOffsetKey.self) { value in
-                //                print("offset >> \(value)")
                 offset = value
             }
-            
+            .coordinateSpace(.named("table"))
         }
+
+        // 起動時のスクロールポジション
         .defaultScrollAnchor(.some(UnitPoint(x: positionInCurrentMonth ?? 0, y: positionInCurrentDay ?? 0)))
         .scrollTargetBehavior(.viewAligned(limitBehavior: .always))
-        //TODO: scrollPositionを使うと横スクロールの挙動がバグるのでひとまず無効にしておく
-        //        .scrollPosition(id: $scrollPosition)
+        // 表示月が変わったとき、翌月に移動したら初日にスクロールして、前月に移動異したら末日に移動
+        // y位置が初期化されてしまうため
+        .scrollPosition(id: $scrollPosition, anchor: .some(UnitPoint(x: 0, y: proxy.frame(in: .named("table")).origin.y / proxy.frame(in: .named("table")).height)))
+
+        .onChange(of: dateOfMonth) { oldValue, newValue in
+            if oldValue[0] > newValue[0] {
+                scrollPosition = dateOfMonth.last
+            }else {
+                scrollPosition = dateOfMonth.first
+            }
+        }
     }
+}
     
     var currentTimeDivider: some View{
         GeometryReader { proxy in
             HStack(spacing: 0){
                 Text("00:00 ")
                     .font(.caption2)
-                    .foregroundStyle(.red)
+                    .foregroundStyle(.cyan)
                     .opacity(0.0)
                 
                 Rectangle()
                     .frame(height: 1)
-                    .foregroundStyle(.red)
+                    .foregroundStyle(.cyan)
             }
             .offset(y: (proxy.frame(in: .global).height / 1440 * dateToMinute(date: currentDate) - 7))
         }
@@ -251,13 +289,11 @@ struct TableView: View {
     @State private var isLoading: Bool = false
     let events = createEvents()
     
-    @Binding var dateList: [Date]
+    var dateOfMonth: [Date]
     var day: Date
     var hourHeight: CGFloat
     
     var body: some View {
-//        let _ = Self._printChanges()
-        
         VStack(alignment: .leading, spacing: 0) {
             ForEach(0...23, id: \.self) { hour in
                 tableCell(hour: hour, day: day)
@@ -279,9 +315,8 @@ struct TableView: View {
             .opacity(0.2)
         }
         .frame(height: hourHeight)
-        .containerRelativeFrame(.horizontal, count: 7, span: 3, spacing: 0)
+        .containerRelativeFrame(.horizontal, count: 7, span: 2, spacing: 0)
         .id("\(hour)_\(day)")
-//        .onAppear{ handleItemAppearance(item: day) }
     }
     
     func scheduleBoxes() -> some View {
@@ -331,39 +366,6 @@ struct TableView: View {
         let endDay = calendar.startOfDay(for: schedule.endDate)
         return startDay <= day && day <= endDay
     }
-    
-    /// Handles the appearance of a new item in the date list.
-    /// - Parameter item: The date item that appeared.
-    private func handleItemAppearance(item: Date) {
-        Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { (t) in
-            DispatchQueue.main.async {
-                
-                if item == dateList.last {
-                    updateDateList(byAdding: 1)
-                } else if item == dateList.first {
-                    updateDateList(byAdding: -1)
-                    
-                }
-            }
-        }
-    }
-    
-    /// Updates the date list by appending or prepending a new date.
-    /// - Parameter daysToAdd: The number of days to add. Positive to append, negative to prepend.
-    private func updateDateList(byAdding daysToAdd: Int) {
-        guard !isLoading else { return }
-        isLoading = true
-        
-        if let referenceDate = daysToAdd > 0 ? dateList.last : dateList.first,
-           let newDate = Calendar.current.date(byAdding: .day, value: daysToAdd, to: referenceDate) {
-            if daysToAdd > 0 {
-                dateList.append(newDate)
-            } else {
-                dateList.insert(newDate, at: 0)
-            }
-        }
-        isLoading = false
-    }
 }
 
 struct ViewOffsetKey: PreferenceKey {
@@ -374,8 +376,8 @@ struct ViewOffsetKey: PreferenceKey {
         value.y += nextValue().y
     }
 }
-
-#Preview {
-    CalendarWeeklyView()
-}
-
+//
+//#Preview {
+//    CalendarWeeklyView()
+//}
+//
