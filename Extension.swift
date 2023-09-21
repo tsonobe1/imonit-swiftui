@@ -134,33 +134,24 @@ extension Date {
 
 // 月の初日から末日までのDateを生成する関数
 func generateDatesOfMonth(selectedMonth: Date) -> [Date]? {
-    var calendar = Calendar.current
-    calendar.timeZone = TimeZone.current // または任意のタイムゾーン
+    var dates: [Date] = []
+    
+    let calendar = Calendar.current
     
     // 月の初日を取得
-    var components = calendar.dateComponents([.year, .month], from: selectedMonth)
-    guard let firstDayOfMonth = calendar.date(from: components) else {
-        return nil
+    guard let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: selectedMonth)) else {
+        return dates
     }
     
     // 月の末日を取得
-    components.month! += 1
-    components.day = 0
-    guard let lastDayOfMonth = calendar.date(from: components) else {
-        return nil
+    guard let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth) else {
+        return dates
     }
     
-    // 生成したDateオブジェクトを格納するための配列
-    var dates = [Date]()
-    
-    var date = firstDayOfMonth
-    while date <= lastDayOfMonth {
-        dates.append(date)
-        if let nextDate = calendar.date(byAdding: .day, value: 1, to: date) {
-            date = nextDate
-        } else {
-            break
-        }
+    var currentDate = startOfMonth
+    while currentDate <= endOfMonth {
+        dates.append(currentDate)
+        currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
     }
     
     return dates

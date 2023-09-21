@@ -30,6 +30,12 @@ struct CalendarView: View {
         VStack(alignment: .trailing){
             Group {
                 HStack(alignment: .center, spacing: 0){
+                    Button {
+                          = Date()
+                    } label: {
+                        Text("Today")
+                    }
+
                     Spacer()
                     
                     Picker("Select a time interval", selection: $selectedCalender) {

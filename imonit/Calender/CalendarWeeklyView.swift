@@ -55,7 +55,8 @@ struct CalendarWeeklyView: View {
                         offset: $offset,
                         headerHeight: headerHeight,
                         hourHeight: hourHeight,
-                        currentDate: currentDate     
+                        currentDate: currentDate,
+                        selectedMonth: $selectedMonth
                     )
                     .coordinateSpace(.named("scroll"))
                 }
@@ -109,9 +110,7 @@ struct MonthSelector: View {
         let symbol = direction == .forward ? "chevron.right" : "chevron.left"
         
         return Button(action: {
-            withAnimation(.easeIn) {
-                adjustMonth(by: value)
-            }
+            adjustMonth(by: value)
         }) {
             HStack(alignment: .center) {
                 if direction == .backward { Image(systemName: symbol) }
@@ -232,7 +231,9 @@ struct ScheduleTable: View {
     var headerHeight: CGFloat
     var hourHeight: CGFloat
     let currentDate: Date
+    @Binding var selectedMonth: Date
     @State var scrollPosition: Date?
+    
     var positionInCurrentMonth: CGFloat? {
         if let datePosition = currentDate.positionInCurrentMonth() {
             datePosition
@@ -270,21 +271,18 @@ struct ScheduleTable: View {
                 offset = value
             }
         }
-
         // 起動時のスクロールポジション
         .defaultScrollAnchor(.some(UnitPoint(x: positionInCurrentMonth ?? 0, y: positionInCurrentDay ?? 0)))
         .scrollTargetBehavior(.viewAligned(limitBehavior: .always))
         // 表示月が変わったとき、翌月に移動したら初日にスクロールして、前月に移動異したら末日に移動
-        // y位置が初期化されてしまうため
         .scrollPosition(id: $scrollPosition)
         .onChange(of: dateOfMonth) { oldValue, newValue in
-            if oldValue[0] > newValue[0] {
+            if oldValue[10] > newValue[10] {
                 scrollPosition = dateOfMonth.last
             }else {
                 scrollPosition = dateOfMonth.first
             }
         }
-        
 }
     
     var currentTimeDivider: some View{
