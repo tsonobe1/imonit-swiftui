@@ -13,7 +13,6 @@ struct CalendarWeeklyView: View {
     var hourHeight: CGFloat = 60
     var headerHeight: CGFloat = 60
 
-    
     @State private var offset = CGPoint.zero
     
     let currentDate: Date // 現在の日付を取得
@@ -22,7 +21,7 @@ struct CalendarWeeklyView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0){
-            MonthBar(selectedMonth: $selectedMonth)
+            MonthSelector(selectedMonth: $selectedMonth)
                 .padding(.horizontal)
             
             HStack(alignment: .top, spacing: 0) {
@@ -66,57 +65,81 @@ struct CalendarWeeklyView: View {
     }
 }
 
-struct MonthBar: View {
+struct MonthSelector: View {
     @Binding var selectedMonth: Date
     
     var body: some View {
-        HStack(alignment: .center){
-            Button(action: {
-                withAnimation(.easeIn){
-                    if let prevMonth = Calendar.current.date(byAdding: .month, value: -1, to: selectedMonth) {
-                        selectedMonth = prevMonth
-                    }
-                }
-            }) {
-                HStack(alignment: .center){
-                    Image(systemName: "chevron.left")
-                    Text(DateFormatter.monthFormatter.string(from: Calendar.current.date(byAdding: .month, value: -1, to: selectedMonth)!))
-                }
-                .font(.title3)
-            }
+        HStack(alignment: .center) {
+            monthButton(direction: .backward)
             Spacer()
-            
-            HStack{
-                Text(DateFormatter.monthFormatter.string(from: selectedMonth))
-                    .foregroundStyle(Calendar.current.isDate(Date(), equalTo: selectedMonth, toGranularity: .month) ? .cyan : .primary)
-                    .font(.title2)
-                
-                Text(DateFormatter.yearFormatter.string(from: selectedMonth))
-                    .foregroundStyle(Calendar.current.isDate(Date(), equalTo: selectedMonth, toGranularity: .year) ? .cyan : .primary)
-                    .font(.title)
-                    .bold()
-            }
-            .transition(.slide) 
-            
+            currentMonthAndYear
             Spacer()
-            
-            Button(action: {
-                withAnimation(.easeIn)
-                {
-                    if let nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: selectedMonth) {
-                        selectedMonth = nextMonth
-                    }
-                }
-            }) {
-                HStack(alignment: .center){
-                    Text(DateFormatter.monthFormatter.string(from: Calendar.current.date(byAdding: .month, value: 1, to: selectedMonth)!))
-                    Image(systemName: "chevron.right")
-                }
-            .font(.title3)
-            }
+            monthButton(direction: .forward)
         }
     }
+    
+    // 現在の月と年を表示するサブビュー
+    private var currentMonthAndYear: some View {
+        HStack {
+            Text(DateFormatter.monthFormatter.string(from: selectedMonth))
+                .foregroundStyle(isSameMonthAsToday ? .cyan : .primary)
+                .font(.title2)
+            
+            Text(DateFormatter.yearFormatter.string(from: selectedMonth))
+                .foregroundStyle(isSameYearAsToday ? .cyan : .primary)
+                .font(.title)
+                .bold()
+        }
+        .transition(.slide)
+    }
+    
+    // 今日とselectedMonthが同じかどうか
+    private var isSameMonthAsToday: Bool {
+        Calendar.current.isDate(Date(), equalTo: selectedMonth, toGranularity: .month)
+    }
+    
+    // 今日とselectedMonthが同じかどうか
+    private var isSameYearAsToday: Bool {
+        Calendar.current.isDate(Date(), equalTo: selectedMonth, toGranularity: .year)
+    }
+    
+    // 前月または次月に移動するボタンのサブビュー
+    private func monthButton(direction: MonthDirection) -> some View {
+        let value = direction == .forward ? 1 : -1
+        let symbol = direction == .forward ? "chevron.right" : "chevron.left"
+        
+        return Button(action: {
+            withAnimation(.easeIn) {
+                adjustMonth(by: value)
+            }
+        }) {
+            HStack(alignment: .center) {
+                if direction == .backward { Image(systemName: symbol) }
+                Text(DateFormatter.monthFormatter.string(from: monthAdjusted(by: value)))
+                if direction == .forward { Image(systemName: symbol) }
+            }
+            .font(.title3)
+        }
+    }
+    
+    // selectedMonthを加算または減算する関数
+    private func adjustMonth(by value: Int) {
+        if let newMonth = Calendar.current.date(byAdding: .month, value: value, to: selectedMonth) {
+            selectedMonth = newMonth
+        }
+    }
+    
+    // 与えられた値で月を調整した後の日付を返す関数
+    private func monthAdjusted(by value: Int) -> Date {
+        return Calendar.current.date(byAdding: .month, value: value, to: selectedMonth) ?? selectedMonth
+    }
+    
+    private enum MonthDirection {
+        case forward
+        case backward
+    }
 }
+
 
 struct DateRowHeader: View {
     var dateOfMonth: [Date]
@@ -227,8 +250,6 @@ struct ScheduleTable: View {
     
     
     var body: some View {
-        GeometryReader { proxy in
-            let _ = print(proxy.frame(in: .named("table")).origin)
         ScrollView([.horizontal, .vertical], showsIndicators: false) {
             LazyHStack(alignment: .top, spacing: 0) {
                 ForEach(dateOfMonth, id: \.self) { day in
@@ -248,7 +269,6 @@ struct ScheduleTable: View {
             .onPreferenceChange(ViewOffsetKey.self) { value in
                 offset = value
             }
-            .coordinateSpace(.named("table"))
         }
 
         // 起動時のスクロールポジション
@@ -256,8 +276,7 @@ struct ScheduleTable: View {
         .scrollTargetBehavior(.viewAligned(limitBehavior: .always))
         // 表示月が変わったとき、翌月に移動したら初日にスクロールして、前月に移動異したら末日に移動
         // y位置が初期化されてしまうため
-        .scrollPosition(id: $scrollPosition, anchor: .some(UnitPoint(x: 0, y: proxy.frame(in: .named("table")).origin.y / proxy.frame(in: .named("table")).height)))
-
+        .scrollPosition(id: $scrollPosition)
         .onChange(of: dateOfMonth) { oldValue, newValue in
             if oldValue[0] > newValue[0] {
                 scrollPosition = dateOfMonth.last
@@ -265,7 +284,7 @@ struct ScheduleTable: View {
                 scrollPosition = dateOfMonth.first
             }
         }
-    }
+        
 }
     
     var currentTimeDivider: some View{
