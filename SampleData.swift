@@ -71,64 +71,64 @@ import Foundation
 //
 //
 
-
-struct Schedule {
-    var title: String
-    var description: String
-    var startDate: Date
-    var endDate: Date
-}
-
-func createEvents() -> [Schedule] {
-    var schedules = [Schedule]()
-    
-    // イベント1
-    let event1 = Schedule(
-        title: "誕生日パーティー",
-        description: "友達の誕生日パーティー",
-        startDate: Date(timeIntervalSinceNow: 3600), // 1時間後
-        endDate: Date(timeIntervalSinceNow: 7200)    // 2時間後
-    )
-    
-    // イベント2
-    let event2 = Schedule(
-        title: "会議",
-        description: "プロジェクトの進捗についての会議",
-        startDate: Date(timeIntervalSinceNow: 86400), // 1日後
-        endDate: Date(timeIntervalSinceNow: 90000)    // 1日と1時間後
-    )
-    
-    // イベント3
-    let event3 = Schedule(
-        title: "ディナー1",
-        description: "家族ディナー1",
-        startDate: Date(timeIntervalSinceNow: 43200), // 12時間後
-        endDate: Date(timeIntervalSinceNow: 46800)    // 13時間後
-    )
-    
-    let event4 = Schedule(
-        title: "ディナー2",
-        description: "家族ディナー2",
-        startDate: Date(timeIntervalSinceNow: 7200), // 12時間後
-        endDate: Date(timeIntervalSinceNow: 10800)    // 13時間後
-    )
-    
-    let event5 = Schedule(
-        title: "ディナー3",
-        description: "家族ディナー3",
-        startDate: Date(timeIntervalSinceNow: 10800), // 12時間後
-        endDate: Date(timeIntervalSinceNow: 14400)    // 13時間後
-    )
-    
-    let event6 = Schedule(
-        title: "ディナー4",
-        description: "家族ディナー4",
-        startDate: Date(timeIntervalSinceNow: 19800), // 12時間後
-        endDate: Date(timeIntervalSinceNow: 21600)    // 13時間後
-    )
-    
-    // イベントを配列に追加
-    schedules.append(contentsOf: [event1, event2, event3,event4,event5,event6])
-    
-    return schedules
-}
+//
+//struct Schedule {
+//    var title: String
+//    var description: String
+//    var startDate: Date
+//    var endDate: Date
+//}
+//
+//func createEvents() -> [Schedule] {
+//    var schedules = [Schedule]()
+//    
+//    // イベント1
+//    let event1 = Schedule(
+//        title: "誕生日パーティー",
+//        description: "友達の誕生日パーティー",
+//        startDate: Date(timeIntervalSinceNow: 3600), // 1時間後
+//        endDate: Date(timeIntervalSinceNow: 7200)    // 2時間後
+//    )
+//    
+//    // イベント2
+//    let event2 = Schedule(
+//        title: "会議",
+//        description: "プロジェクトの進捗についての会議",
+//        startDate: Date(timeIntervalSinceNow: 86400), // 1日後
+//        endDate: Date(timeIntervalSinceNow: 90000)    // 1日と1時間後
+//    )
+//    
+//    // イベント3
+//    let event3 = Schedule(
+//        title: "ディナー1",
+//        description: "家族ディナー1",
+//        startDate: Date(timeIntervalSinceNow: 43200), // 12時間後
+//        endDate: Date(timeIntervalSinceNow: 46800)    // 13時間後
+//    )
+//    
+//    let event4 = Schedule(
+//        title: "ディナー2",
+//        description: "家族ディナー2",
+//        startDate: Date(timeIntervalSinceNow: 7200), // 12時間後
+//        endDate: Date(timeIntervalSinceNow: 10800)    // 13時間後
+//    )
+//    
+//    let event5 = Schedule(
+//        title: "ディナー3",
+//        description: "家族ディナー3",
+//        startDate: Date(timeIntervalSinceNow: 10800), // 12時間後
+//        endDate: Date(timeIntervalSinceNow: 14400)    // 13時間後
+//    )
+//    
+//    let event6 = Schedule(
+//        title: "ディナー4",
+//        description: "家族ディナー4",
+//        startDate: Date(timeIntervalSinceNow: 19800), // 12時間後
+//        endDate: Date(timeIntervalSinceNow: 21600)    // 13時間後
+//    )
+//    
+//    // イベントを配列に追加
+//    schedules.append(contentsOf: [event1, event2, event3,event4,event5,event6])
+//    
+//    return schedules
+//}

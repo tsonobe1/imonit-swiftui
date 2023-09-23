@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct CalendarWeeklyView: View {
-    let events = createEvents()
-    
     var hourHeight: CGFloat = 60
     var headerHeight: CGFloat = 60
 
@@ -103,7 +101,7 @@ struct MonthSelector: View {
     private var isSameYearAsToday: Bool {
         Calendar.current.isDate(Date(), equalTo: selectedMonth, toGranularity: .year)
     }
-    
+
     // 前月または次月に移動するボタンのサブビュー
     private func monthButton(direction: MonthDirection) -> some View {
         let value = direction == .forward ? 1 : -1
@@ -304,7 +302,7 @@ struct ScheduleTable: View {
 
 struct TableView: View {
     @State private var isLoading: Bool = false
-    let events = createEvents()
+//    let events = createEvents()
     
     var dateOfMonth: [Date]
     var day: Date
@@ -337,52 +335,52 @@ struct TableView: View {
     }
     
     func scheduleBoxes() -> some View {
-        let matchingSchedules = getMatchingSchedules(for: day, from: events)
+//        let matchingSchedules = getMatchingSchedules(for: day, from: events)
         
         return GeometryReader { proxy in
             ZStack(alignment: .topLeading) {
-                ForEach(matchingSchedules, id: \.title) { event in
-                    RoundedRectangle(cornerRadius: 10)
-                        .foregroundStyle(.blue.gradient)
-                        .opacity(0.4)
-                        .overlay {
-                            Text(event.title)
-                                .bold()
-                        }
-                        .frame(height: proxy.frame(in: .global).height / 1440 * caluculateTimeInterval(startDate: event.startDate, endDate: event.endDate))
-                        .offset(y: proxy.frame(in: .global).height / 1440 * dateToMinute(date: event.startDate))
-                        .onTapGesture {
-                            print(event.title)
-                        }
-                }
+//                ForEach(matchingSchedules, id: \.title) { event in
+//                    RoundedRectangle(cornerRadius: 10)
+//                        .foregroundStyle(.blue.gradient)
+//                        .opacity(0.4)
+//                        .overlay {
+//                            Text(event.title)
+//                                .bold()
+//                        }
+//                        .frame(height: proxy.frame(in: .global).height / 1440 * caluculateTimeInterval(startDate: event.startDate, endDate: event.endDate))
+//                        .offset(y: proxy.frame(in: .global).height / 1440 * dateToMinute(date: event.startDate))
+//                        .onTapGesture {
+//                            print(event.title)
+//                        }
+//                }
             }
         }
     }
     
-    /// Filters and returns schedules that occur on a given day.
-    /// - Parameters:
-    ///   - day: The day for which to find schedules.
-    ///   - schedules: The list of all schedules.
-    /// - Returns: An array of schedules that occur on the given day.
-    private func getMatchingSchedules(for day: Date, from schedules: [Schedule]) -> [Schedule] {
-        let calendar = Calendar.current
-        let currentDay = calendar.startOfDay(for: day)
-        return schedules.filter { schedule in
-            scheduleMatchesDay(schedule, on: currentDay, using: calendar)
-        }
-    }
-    
-    /// Checks if a schedule occurs on a given day.
-    /// - Parameters:
-    ///   - schedule: The schedule to check.
-    ///   - day: The day to check against.
-    ///   - calendar: The calendar to use for date calculations.
-    /// - Returns: A Boolean value indicating whether the schedule occurs on the given day.
-    private func scheduleMatchesDay(_ schedule: Schedule, on day: Date, using calendar: Calendar) -> Bool {
-        let startDay = calendar.startOfDay(for: schedule.startDate)
-        let endDay = calendar.startOfDay(for: schedule.endDate)
-        return startDay <= day && day <= endDay
-    }
+//    /// Filters and returns schedules that occur on a given day.
+//    /// - Parameters:
+//    ///   - day: The day for which to find schedules.
+//    ///   - schedules: The list of all schedules.
+//    /// - Returns: An array of schedules that occur on the given day.
+//    private func getMatchingSchedules(for day: Date, from schedules: [Schedule]) -> [Schedule] {
+//        let calendar = Calendar.current
+//        let currentDay = calendar.startOfDay(for: day)
+//        return schedules.filter { schedule in
+//            scheduleMatchesDay(schedule, on: currentDay, using: calendar)
+//        }
+//    }
+//    
+//    /// Checks if a schedule occurs on a given day.
+//    /// - Parameters:
+//    ///   - schedule: The schedule to check.
+//    ///   - day: The day to check against.
+//    ///   - calendar: The calendar to use for date calculations.
+//    /// - Returns: A Boolean value indicating whether the schedule occurs on the given day.
+//    private func scheduleMatchesDay(_ schedule: Schedule, on day: Date, using calendar: Calendar) -> Bool {
+//        let startDay = calendar.startOfDay(for: schedule.startDate)
+//        let endDay = calendar.startOfDay(for: schedule.endDate)
+//        return startDay <= day && day <= endDay
+//    }
 }
 
 struct ViewOffsetKey: PreferenceKey {

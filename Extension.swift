@@ -7,37 +7,58 @@
 
 import Foundation
 
+// Text(DateFormatter.dayFormatter.string(from: currentDate))
 extension DateFormatter {
+    // 1
     static var dayFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "d"
         return formatter
     }
     
+    // 2023
     static var yearFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy"
         return formatter
     }
     
+    // Jan
     static var monthFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM"
         return formatter
     }
     
+    // Tue
     static var weekdayFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEE"
         return formatter
     }
     
+    // 12/31/23
     static var shortDateForm: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         return formatter
     }
     
+    // 12:00
+    static var shortTimeForm: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        return formatter
+    }
+     
+    // 02/28
+    static var nonZeroDayMonthForm: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M/d"
+        return formatter
+    }
+    
+    // 02/28
     static var dayMonthForm: DateFormatter {
         let formatter = DateFormatter()
         formatter.setLocalizedDateFormatFromTemplate("MM/dd")
