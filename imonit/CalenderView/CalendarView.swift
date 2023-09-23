@@ -31,7 +31,7 @@ struct CalendarView: View {
             Group {
                 HStack(alignment: .center, spacing: 0){
                     Button {
-                          = Date()
+                        selectedMonth = Date()
                     } label: {
                         Text("Today")
                     }

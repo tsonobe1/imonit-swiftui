@@ -18,8 +18,12 @@ struct GoelAdd: View {
     @State private var endDate: Date = Date()
     var parent: Goal?
     
+    var bounds: ClosedRange<Date> {
+        return (parent?.startDate ?? .distantPast)...(parent?.endDate ?? .distantFuture)
+    }
+    
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section(header: Text("parent")) {
                     if let parent2 = parent {
@@ -36,11 +40,13 @@ struct GoelAdd: View {
                     DatePicker(
                         "Start Date",
                         selection: $startDate,
+                        in: bounds,
                         displayedComponents: .date
                     )
                     DatePicker(
                         "End Date", 
                         selection: $endDate,
+                        in: bounds,
                         displayedComponents: .date
                     )
                 }
@@ -61,7 +67,7 @@ struct GoelAdd: View {
                     }
                 }
             }
-            .navigationTitle("新しい目標")
+            .navigationTitle(parent == nil ? "New Goal" : "New Child Goal")
         }
     }
 }
