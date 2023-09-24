@@ -45,6 +45,7 @@ final class Schedule {
     var endDate: Date
     var createdData: Date
     var goal: Goal?
+    var color: Color
     
     init(id: UUID, title: String, detail: String, startDate: Date, endDate: Date, createdData: Date) {
         self.id = id
@@ -54,6 +55,7 @@ final class Schedule {
         self.endDate = endDate
         self.createdData = createdData
         self.goal = goal
+        self.color = color
     }
 }
 

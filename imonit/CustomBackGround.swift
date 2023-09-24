@@ -27,7 +27,7 @@ struct Glassmorphism: View {
 /// .backgrount(GradientBackground())
 struct GradientBackground: View {
     var body: some View {
-        LinearGradient(colors: [.blue.opacity(0.1), .purple.opacity(0.3)],
+        LinearGradient(colors: [.blue.opacity(0.1), .purple.opacity(0.2), .orange.opacity(0.3), .secondary.opacity(0.1)],
                        startPoint: .topLeading, endPoint: .bottomTrailing)
             .ignoresSafeArea(.all)
     }

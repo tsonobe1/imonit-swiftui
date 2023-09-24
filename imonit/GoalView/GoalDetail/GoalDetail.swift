@@ -107,6 +107,7 @@ struct GoalDetail: View {
                     Text(goal.detail)
                         .font(.caption)
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             },
             label: {
                 HStack{

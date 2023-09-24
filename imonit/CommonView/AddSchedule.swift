@@ -42,18 +42,30 @@ struct AddSchedule: View {
                     TextField("Detail", text: $detail)
                 }
                 
-                Section(header: Text("Start Date ~ End Date")) {
+                Section {
                     DatePicker(
                         "Start",
                         selection: $startDate,
                         in: bounds
                     )
+                    .foregroundStyle(startDate > endDate ? .red : .primary)
+
                     DatePicker(
                         "End",
                         selection: $endDate,
                         in: bounds
                     )
+                    .foregroundStyle(startDate > endDate ? .red : .primary)
+                } header: {
+                    Text("Start Date ~ End Date")
+                } footer: {
+                    Text("Start date should be before end date.")
+                        .foregroundColor(.red)
+                        .font(.caption2)
+                        .opacity(startDate > endDate ? 1 : 0)
                 }
+
+                
                 
                 Section {
                     Button("add") {
