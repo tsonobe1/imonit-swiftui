@@ -17,6 +17,7 @@
 		0CA4BDFD2ABE83E300AFEB04 /* SubGoalDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA4BDFC2ABE83E300AFEB04 /* SubGoalDetail.swift */; };
 		0CA4BE002ABE844600AFEB04 /* DateProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA4BDFF2ABE844600AFEB04 /* DateProgress.swift */; };
 		0CA4BE022ABEB4A200AFEB04 /* AddSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA4BE012ABEB4A200AFEB04 /* AddSchedule.swift */; };
+		0CA4BE042ABF2D9C00AFEB04 /* ScheduleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA4BE032ABF2D9C00AFEB04 /* ScheduleList.swift */; };
 		0CDAA0A42AAC063000456A5A /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDAA0A32AAC063000456A5A /* Models.swift */; };
 		0CDAA0A72AAC361A00456A5A /* GoalDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDAA0A62AAC361A00456A5A /* GoalDetail.swift */; };
 		0CDAA0A92AACDF5B00456A5A /* GoalTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDAA0A82AACDF5B00456A5A /* GoalTimeline.swift */; };
@@ -60,6 +61,7 @@
 		0CA4BDFC2ABE83E300AFEB04 /* SubGoalDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubGoalDetail.swift; sourceTree = "<group>"; };
 		0CA4BDFF2ABE844600AFEB04 /* DateProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateProgress.swift; sourceTree = "<group>"; };
 		0CA4BE012ABEB4A200AFEB04 /* AddSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSchedule.swift; sourceTree = "<group>"; };
+		0CA4BE032ABF2D9C00AFEB04 /* ScheduleList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleList.swift; sourceTree = "<group>"; };
 		0CDAA0A32AAC063000456A5A /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		0CDAA0A62AAC361A00456A5A /* GoalDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalDetail.swift; sourceTree = "<group>"; };
 		0CDAA0A82AACDF5B00456A5A /* GoalTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTimeline.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				0CDAA0A62AAC361A00456A5A /* GoalDetail.swift */,
+				0CA4BE032ABF2D9C00AFEB04 /* ScheduleList.swift */,
 				0CA4BDFC2ABE83E300AFEB04 /* SubGoalDetail.swift */,
 			);
 			path = GoalDetail;
@@ -357,6 +360,7 @@
 				0C3719562A9A02DD00D777A0 /* CalendarWeeklyView.swift in Sources */,
 				0CA4BDFD2ABE83E300AFEB04 /* SubGoalDetail.swift in Sources */,
 				0CA4BE022ABEB4A200AFEB04 /* AddSchedule.swift in Sources */,
+				0CA4BE042ABF2D9C00AFEB04 /* ScheduleList.swift in Sources */,
 				0CDAAD2A2A8BA56E00520D8A /* SampleData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

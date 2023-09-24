@@ -50,7 +50,7 @@ struct GoalDetail: View {
                 // ℹ️MARK: Detail
                 details
                 
-                // MARK: Schedule
+                // 📆MARK: Schedule
                 ScheduleList(goal: goal)
                 
                 // ⛳️MARK: Children = subGoal
@@ -152,98 +152,3 @@ struct GoalDetail: View {
     GoalList()
         .modelContainer(for: Goal.self)
 }
-
-struct ScheduleList: View {
-    @Environment(\.modelContext) private var context
-    @State private var isExpandedScheduleDisclosure = true
-    @State private var isAddScheduleSheetPresented = false
-    
-    let goal: Goal
-    
-    @Query(sort: \Schedule.startDate, order: .forward)
-    var schedules: [Schedule]
-    
-    init(goal: Goal){
-        self.goal = goal
-        let goalID = goal.id
-        let filter = #Predicate<Schedule> {
-            $0.goal?.id == goalID
-        }
-        let query = Query(filter: filter, sort: \.startDate)
-        _schedules = query
-    }
-
-    var body: some View {
-        DisclosureGroup(
-            isExpanded: $isExpandedScheduleDisclosure,
-            content: {
-                if schedules.isEmpty {
-                    ContentUnavailableView {
-                        Label("No Schedule", systemImage: "plus")
-                    }
-                    .opacity(0.5)
-                }
-                ForEach(schedules) { schedule in
-                    HStack(alignment: .center) {
-                        Text(DateFormatter.nonZeroDayMonthForm.string(from: goal.startDate))
-                            .font(.footnote)
-                            .frame(alignment: .top)
-                        
-                        
-                        VStack {
-                            Text(DateFormatter.shortTimeForm.string(from: schedule.startDate))
-                            Spacer(minLength: 2)
-                            Image(systemName: "chevron.down")
-                            Spacer(minLength: 2)
-                            Text(DateFormatter.shortTimeForm.string(from: schedule.endDate))
-                        }
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                        
-                        Text(schedule.title)
-                            .font(.callout)
-                            .multilineTextAlignment(.leading)
-                            .lineLimit(3)
-                            .padding(10)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background{
-                                RoundedRectangle(cornerRadius: 5, style: .circular)
-                                    .fill(.blue.gradient.opacity(0.6))
-                            }
-                        
-                    }
-                
-                    .padding(.vertical, 5)
-                
-                    
-                }
-            },
-            label: {
-                HStack(alignment: .lastTextBaseline){
-                    Image(systemName: "calendar")
-                    Text("Schedule")
-                    // print messsage button
-                    Button{
-                        isAddScheduleSheetPresented.toggle()
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                    
-                    Button{
-                        let newSchedule = Schedule(id: UUID(), title: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum", detail: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum", startDate: Date(), endDate: Date(), createdData: Date())
-                        goal.schedules.append(newSchedule)
-                        
-                    } label: {
-                        Text("Add")
-                    }
-                }
-                .font(.headline)
-            }
-        )
-        .foregroundStyle(.primary)
-        .sheet(isPresented: $isAddScheduleSheetPresented) {
-            AddSchedule(goal: goal)
-        }
-    }
-}
-
