@@ -32,3 +32,23 @@ struct GradientBackground: View {
             .ignoresSafeArea(.all)
     }
 }
+
+/// e,g,
+/// .background(ScheduleBackground())
+struct ScheduleBackground: View {
+    var body: some View {
+        RoundedRectangle(cornerRadius: 5, style: .circular)
+            .fill(.indigo.gradient.opacity(0.6))
+            .mask(
+                HStack {
+                    Rectangle()
+                        .frame(width: 5)
+                    Spacer()
+                }
+            )
+            .background {
+                RoundedRectangle(cornerRadius: 5, style: .circular)
+                    .fill(.indigo.gradient.opacity(0.2))
+            }
+    }
+}

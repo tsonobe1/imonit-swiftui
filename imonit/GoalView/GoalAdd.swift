@@ -53,11 +53,17 @@ struct GoelAdd: View {
                 
                 Section {
                     Button("add") {
+                        let adjustedStartDate = Calendar.current.startOfDay(for: startDate)
+                                       
+                        let adjustedEndDate = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: endDate) ?? endDate
+                        
                         if parent == nil {
-                            let newGoal = Goal(id: UUID(), title: title, detail: detail, startDate: startDate, endDate: endDate, createdData: Date(), parent: nil)
+                           
+                                           
+                            let newGoal = Goal(id: UUID(), title: title, detail: detail, startDate: adjustedStartDate, endDate: adjustedEndDate, createdData: Date(), parent: nil)
                             context.insert(newGoal)
                         }else{
-                            let newGoal = Goal(id: UUID(), title: title, detail: detail, startDate: startDate, endDate: endDate, createdData: Date(), parent: parent)
+                            let newGoal = Goal(id: UUID(), title: title, detail: detail, startDate: adjustedStartDate, endDate: adjustedEndDate, createdData: Date(), parent: parent)
                             
 //                            context.insert(newGoal)
                             parent?.children.append(newGoal)

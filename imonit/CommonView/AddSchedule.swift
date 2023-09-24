@@ -46,14 +46,12 @@ struct AddSchedule: View {
                     DatePicker(
                         "Start",
                         selection: $startDate,
-                        in: bounds,
-                        displayedComponents: .date
+                        in: bounds
                     )
                     DatePicker(
                         "End",
                         selection: $endDate,
-                        in: bounds,
-                        displayedComponents: .date
+                        in: bounds
                     )
                 }
                 
