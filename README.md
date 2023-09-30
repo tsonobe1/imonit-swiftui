@@ -4,6 +4,10 @@
 SwiftUIでカレンダーアプリを作成中
 
 ## 現在の状況　
+### 2023/10/01
+![Simulator Screen Recording - iPhone 15 pro - 2023-10-01 at 03 08 24](https://github.com/tsonobe1/imonit-swiftui/assets/40202387/eccabf2c-dcf9-4036-8b52-1b306f6ebf16)
+![Simulator Screen Recording - iPhone 15 pro - 2023-10-01 at 03 08 59](https://github.com/tsonobe1/imonit-swiftui/assets/40202387/07f517d4-9347-455e-bc3b-54eac36c8b21)
+
 
 ### 2023/09/23
 ![Simulator Screen Recording - iPhone 15 Pro - 2023-09-23 at 17 02 56](https://github.com/tsonobe1/imonit-swiftui/assets/40202387/60f48dc2-043d-4c1f-b998-60379366eb97)
