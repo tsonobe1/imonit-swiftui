@@ -24,63 +24,136 @@ struct CalendarView: View {
         case yearly = "Yearly"
     }
     @State private var selectedCalender: CalendarOption = .weekly
+    @State private var searchText: String = ""
+    @State private var isSearching = false
+    @State private var isPresentedMagnifyingglass = false
+    @State private var isPresentedAddSchedule = false
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
-        
-        VStack(alignment: .trailing){
-            Group {
-                HStack(alignment: .center, spacing: 0){
-                    Button {
-                        selectedMonth = Date()
-                    } label: {
-                        Text("Today")
-                    }
-
-                    Spacer()
-                    
-                    Picker("Select a time interval", selection: $selectedCalender) {
-                        ForEach(CalendarOption.allCases, id: \.self) { option in
-                            Text(option.rawValue).tag(option)
+        ZStack(alignment: .top) {
+            if isPresentedMagnifyingglass {
+                Rectangle()
+                    // fill system color mode
+                    .fill(colorScheme == .dark ? .black : .white)
+                    .frame(width: .infinity, height: .infinity)
+                    .zIndex(1)
+                    .ignoresSafeArea(edges: .all)
+                    .transition(.move(edge: .top))
+                    .overlay(alignment: .topLeading){
+                        VStack(alignment: .leading) {
+                            HStack {
+                                TextField("Search", text: $searchText, prompt: Text("Placeholder").foregroundStyle(.gray))
+                                    
+                                Button("Cancel") {
+                                    withAnimation {
+                                        isPresentedMagnifyingglass.toggle()
+                                    }
+                                }
+                            }
+                            .textFieldStyle(.roundedBorder)
+                            .padding()
+                            
+                            
+                            ForEach(0..<10) { _ in
+                               RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.gray)
+                                .frame(height: 50)
+                                .padding(.horizontal)
+                            }
                         }
                     }
-                    .containerRelativeFrame(.horizontal, count: 10, span: 5, spacing: 0)
-                    .pickerStyle(.menu)
+            }
+              
+            
+        NavigationStack {
+            VStack(alignment: .trailing){
+                Group {
                     
-                    HStack{
-                        // Search Schedules
-                        Button(action: {}) {
-                            Image(systemName: "magnifyingglass")
-                                .font(.title2)
-                                .padding(.horizontal,10)
+                   
+                }
+                
+                switch selectedCalender {
+                case .daily:
+                    CalendarDailyView(selectedDate: $selectedDate)
+                case .weekly:
+                    CalendarWeeklyView(currentDate: currentDate, selectedMonth: $selectedMonth, dateOfMonth: dateOfMonth)
+                case .monthly:
+                    Text("Monthly View")
+                case .yearly:
+                    Text("Yearly View")
+                }
+                    
+            }
+            .toolbar{
+                ToolbarItemGroup {
+                    HStack(alignment: .center, spacing: 0){
+                        Button {
+                            selectedMonth = Date()
+                        } label: {
+                            Text("Today")
                         }
                         
-                        // Add New Schedules
-                        Button(action: {}) {
-                            Image(systemName: "plus")
-                                .font(.title2)
-                                .padding(.horizontal,10)
+                        Spacer()
+                        
+                        Picker("Select a time interval", selection: $selectedCalender) {
+                            ForEach(CalendarOption.allCases, id: \.self) { option in
+                                Text(option.rawValue).tag(option)
+                            }
                         }
+                        //                    .containerRelativeFrame(.horizontal, count: 10, span: 5, spacing: 0)
+                        .pickerStyle(.menu)
+                        toolbar
+                        
+                        //                    .containerRelativeFrame(.horizontal, count: 10, span: 5, spacing: 0)
                     }
-                    .containerRelativeFrame(.horizontal, count: 10, span: 2, spacing: 0)
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
-            }
-            
-            switch selectedCalender {
-            case .daily:
-                CalendarDailyView(selectedDate: $selectedDate)
-            case .weekly:
-                CalendarWeeklyView(currentDate: currentDate, selectedMonth: $selectedMonth, dateOfMonth: dateOfMonth)
-            case .monthly:
-                Text("Monthly View")
-            case .yearly:
-                Text("Yearly View")
             }
         }
     }
+    
+    }
+    var toolbar: some View {
+            
+            
+            HStack{
+                // Search Schedules
+                Button(action: {
+                    withAnimation()  {
+                        isPresentedMagnifyingglass.toggle()}
+                }
+                
+                ) {
+                    Image(systemName: "magnifyingglass")
+                    //                    .font(.title2)
+                    //                    .padding(.horizontal,5)
+                }
+                
+                
+                
+                // Add New Schedules
+                Button(action: {isPresentedAddSchedule.toggle()}) {
+                    Image(systemName: "plus")
+                    //                    .font(.title2)
+                    //                    .padding(.horizontal,5)
+                }
+            }
+            .sheet(isPresented: $isPresentedAddSchedule, content: {
+                AddSchedule()
+            })
+            
+    
+    }
+
+
+    
 }
 
 #Preview {
     CalendarView()
 }
 
+
+
+    
