@@ -13,6 +13,6 @@ struct imonitApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: [Goal.self, Schedule.self])
+        .modelContainer(for: [Goal.self, Schedule.self, ScheduleCategory.self])
     }
 }

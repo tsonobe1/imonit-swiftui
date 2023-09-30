@@ -36,9 +36,10 @@ struct GradientBackground: View {
 /// e,g,
 /// .background(ScheduleBackground())
 struct ScheduleBackground: View {
+    let color: Color
     var body: some View {
         RoundedRectangle(cornerRadius: 5, style: .circular)
-            .fill(.indigo.gradient.opacity(0.6))
+            .fill(color.gradient.opacity(0.6))
             .mask(
                 HStack {
                     Rectangle()
@@ -48,7 +49,7 @@ struct ScheduleBackground: View {
             )
             .background {
                 RoundedRectangle(cornerRadius: 5, style: .circular)
-                    .fill(.indigo.gradient.opacity(0.2))
+                    .fill(color.gradient.opacity(0.2))
             }
     }
 }
