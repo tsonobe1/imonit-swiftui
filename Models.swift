@@ -46,7 +46,7 @@ final class Schedule {
     var createdData: Date
     var goal: Goal?
     
-    @Relationship var categories: [ScheduleCategory]
+    @Relationship var category: ScheduleCategory?
 
     
     init(
@@ -58,7 +58,7 @@ final class Schedule {
         createdData: Date,
         // Relationship
         goal: Goal? = nil,
-        categories: [ScheduleCategory] = []
+        category: ScheduleCategory? = nil
     ) {
         self.id = id
         self.title = title
@@ -68,7 +68,7 @@ final class Schedule {
         self.createdData = createdData
         // Relationship
         self.goal = goal
-        self.categories = categories
+        self.category = category
     }
 }
 
@@ -78,6 +78,7 @@ final class ScheduleCategory {
     @Attribute(.unique) var id: UUID
     var name: String
     var createdData: Date
+    var order: Int
     var color_: String?
     var color: Color {
         get {
@@ -99,6 +100,7 @@ final class ScheduleCategory {
         id: UUID,
         title: String,
         createdData: Date,
+        order: Int,
         color_: String? = nil,
         schedules: [Schedule] = []
         
@@ -106,6 +108,7 @@ final class ScheduleCategory {
         self.id = id
         self.name = title
         self.createdData = createdData
+        self.order = order
         self.color_ = color_
         self.schedules = schedules
         

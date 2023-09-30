@@ -66,6 +66,8 @@ struct GoalList: View {
                 }
                 Button("All Delete"){
                     try?context.delete(model: Goal.self, includeSubclasses: false)
+                    try?context.delete(model: Schedule.self, includeSubclasses: false)
+                    try?context.delete(model: ScheduleCategory.self, includeSubclasses: false)
                 }
             }
             

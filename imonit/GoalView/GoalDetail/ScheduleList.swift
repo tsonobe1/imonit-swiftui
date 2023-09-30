@@ -105,7 +105,9 @@ struct ScheduleRow: View {
                 .lineLimit(2)
                 .padding(10)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background{ ScheduleBackground() }
+                .background{
+                    ScheduleBackground(color: schedule.category?.color ?? .gray)
+                }
         }
         .padding(.vertical, 5)
     }
