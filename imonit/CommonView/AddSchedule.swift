@@ -101,7 +101,8 @@ struct AddSchedule: View {
                 }
             }
         }
-        .navigationTitle("New Schedule")
+        .navigationBarHidden(true)
+//        .navigationTitle("New Schedule")
     }
 }
 

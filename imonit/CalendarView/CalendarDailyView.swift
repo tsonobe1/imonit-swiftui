@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CalendarDailyView: View {
+struct CalendarDaily: View {
     @Binding var selectedDate: Date
     
     var body: some View {
@@ -54,5 +54,5 @@ struct CalendarDailyView: View {
 }
 
 #Preview {
-    CalendarDailyView(selectedDate: .constant(Date()))
+    CalendarDaily(selectedDate: .constant(Date()))
 }

@@ -51,7 +51,7 @@ struct GoalDetail: View {
                 details
                 
                 // 📆MARK: Schedule
-                ScheduleList(goal: goal)
+                GoalScheduleList(goal: goal)
                 
                 // ⛳️MARK: Children = subGoal
                 SubGoal(goal: goal)

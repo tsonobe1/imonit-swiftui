@@ -11,13 +11,16 @@
 		0C1FE1332A8D0F7E005F5842 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1FE1322A8D0F7E005F5842 /* CalendarView.swift */; };
 		0C2E1B362AB47A83001515DE /* GoalAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2E1B352AB47A83001515DE /* GoalAdd.swift */; };
 		0C3719562A9A02DD00D777A0 /* CalendarWeeklyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3719552A9A02DD00D777A0 /* CalendarWeeklyView.swift */; };
+		0C50163E2AD131B100FEF2B5 /* CalendatMonthly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C50163D2AD131B100FEF2B5 /* CalendatMonthly.swift */; };
+		0C5016402AD147F000FEF2B5 /* MonthSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C50163F2AD147F000FEF2B5 /* MonthSelector.swift */; };
+		0C53B2002AD3E878000BF91D /* CalendarScheduleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C53B1FF2AD3E878000BF91D /* CalendarScheduleList.swift */; };
 		0C74ED202AA3553300957167 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0C74ED1F2AA3553300957167 /* README.md */; };
 		0C8501B62A8F68140063DE70 /* CalendarDailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8501B52A8F68140063DE70 /* CalendarDailyView.swift */; };
 		0CA4BDFA2ABDF97800AFEB04 /* CustomBackGround.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA4BDF92ABDF97800AFEB04 /* CustomBackGround.swift */; };
 		0CA4BDFD2ABE83E300AFEB04 /* SubGoalDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA4BDFC2ABE83E300AFEB04 /* SubGoalDetail.swift */; };
 		0CA4BE002ABE844600AFEB04 /* DateProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA4BDFF2ABE844600AFEB04 /* DateProgress.swift */; };
 		0CA4BE022ABEB4A200AFEB04 /* AddSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA4BE012ABEB4A200AFEB04 /* AddSchedule.swift */; };
-		0CA4BE042ABF2D9C00AFEB04 /* ScheduleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA4BE032ABF2D9C00AFEB04 /* ScheduleList.swift */; };
+		0CA4BE042ABF2D9C00AFEB04 /* GoalScheduleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA4BE032ABF2D9C00AFEB04 /* GoalScheduleList.swift */; };
 		0CDAA0A42AAC063000456A5A /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDAA0A32AAC063000456A5A /* Models.swift */; };
 		0CDAA0A72AAC361A00456A5A /* GoalDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDAA0A62AAC361A00456A5A /* GoalDetail.swift */; };
 		0CDAA0A92AACDF5B00456A5A /* GoalTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDAA0A82AACDF5B00456A5A /* GoalTimeline.swift */; };
@@ -55,13 +58,16 @@
 		0C1FE1322A8D0F7E005F5842 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		0C2E1B352AB47A83001515DE /* GoalAdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalAdd.swift; sourceTree = "<group>"; };
 		0C3719552A9A02DD00D777A0 /* CalendarWeeklyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWeeklyView.swift; sourceTree = "<group>"; };
+		0C50163D2AD131B100FEF2B5 /* CalendatMonthly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendatMonthly.swift; sourceTree = "<group>"; };
+		0C50163F2AD147F000FEF2B5 /* MonthSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthSelector.swift; sourceTree = "<group>"; };
+		0C53B1FF2AD3E878000BF91D /* CalendarScheduleList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScheduleList.swift; sourceTree = "<group>"; };
 		0C74ED1F2AA3553300957167 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0C8501B52A8F68140063DE70 /* CalendarDailyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDailyView.swift; sourceTree = "<group>"; };
 		0CA4BDF92ABDF97800AFEB04 /* CustomBackGround.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackGround.swift; sourceTree = "<group>"; };
 		0CA4BDFC2ABE83E300AFEB04 /* SubGoalDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubGoalDetail.swift; sourceTree = "<group>"; };
 		0CA4BDFF2ABE844600AFEB04 /* DateProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateProgress.swift; sourceTree = "<group>"; };
 		0CA4BE012ABEB4A200AFEB04 /* AddSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSchedule.swift; sourceTree = "<group>"; };
-		0CA4BE032ABF2D9C00AFEB04 /* ScheduleList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleList.swift; sourceTree = "<group>"; };
+		0CA4BE032ABF2D9C00AFEB04 /* GoalScheduleList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalScheduleList.swift; sourceTree = "<group>"; };
 		0CDAA0A32AAC063000456A5A /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		0CDAA0A62AAC361A00456A5A /* GoalDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalDetail.swift; sourceTree = "<group>"; };
 		0CDAA0A82AACDF5B00456A5A /* GoalTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTimeline.swift; sourceTree = "<group>"; };
@@ -106,21 +112,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0C8501B42A8F67DD0063DE70 /* CalenderView */ = {
+		0C8501B42A8F67DD0063DE70 /* CalendarView */ = {
 			isa = PBXGroup;
 			children = (
 				0C1FE1322A8D0F7E005F5842 /* CalendarView.swift */,
+				0C50163D2AD131B100FEF2B5 /* CalendatMonthly.swift */,
+				0C53B1FF2AD3E878000BF91D /* CalendarScheduleList.swift */,
 				0C3719552A9A02DD00D777A0 /* CalendarWeeklyView.swift */,
 				0C8501B52A8F68140063DE70 /* CalendarDailyView.swift */,
 			);
-			path = CalenderView;
+			path = CalendarView;
 			sourceTree = "<group>";
 		};
 		0CA4BDFB2ABE83B500AFEB04 /* GoalDetail */ = {
 			isa = PBXGroup;
 			children = (
 				0CDAA0A62AAC361A00456A5A /* GoalDetail.swift */,
-				0CA4BE032ABF2D9C00AFEB04 /* ScheduleList.swift */,
+				0CA4BE032ABF2D9C00AFEB04 /* GoalScheduleList.swift */,
 				0CA4BDFC2ABE83E300AFEB04 /* SubGoalDetail.swift */,
 			);
 			path = GoalDetail;
@@ -130,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				0CA4BDFF2ABE844600AFEB04 /* DateProgress.swift */,
+				0C50163F2AD147F000FEF2B5 /* MonthSelector.swift */,
 				0CA4BE012ABEB4A200AFEB04 /* AddSchedule.swift */,
 			);
 			path = CommonView;
@@ -179,7 +188,7 @@
 				0C1FE1302A8D099F005F5842 /* TopTabView.swift */,
 				0CA4BDFE2ABE842C00AFEB04 /* CommonView */,
 				0CDAA0A52AAC35F900456A5A /* GoalView */,
-				0C8501B42A8F67DD0063DE70 /* CalenderView */,
+				0C8501B42A8F67DD0063DE70 /* CalendarView */,
 				0CDAACFE2A8A56B900520D8A /* Assets.xcassets */,
 				0CDAAD002A8A56B900520D8A /* imonit.entitlements */,
 				0CDAAD012A8A56B900520D8A /* Preview Content */,
@@ -349,10 +358,12 @@
 				0CDAA0A92AACDF5B00456A5A /* GoalTimeline.swift in Sources */,
 				0CDAA0A42AAC063000456A5A /* Models.swift in Sources */,
 				0CDAA0A72AAC361A00456A5A /* GoalDetail.swift in Sources */,
+				0C53B2002AD3E878000BF91D /* CalendarScheduleList.swift in Sources */,
 				0CDAACFD2A8A56B700520D8A /* ContentView.swift in Sources */,
 				0CDAACFB2A8A56B700520D8A /* imonitApp.swift in Sources */,
 				0CDAAD282A8BA3E600520D8A /* GoalList.swift in Sources */,
 				0C8501B62A8F68140063DE70 /* CalendarDailyView.swift in Sources */,
+				0C5016402AD147F000FEF2B5 /* MonthSelector.swift in Sources */,
 				0CA4BE002ABE844600AFEB04 /* DateProgress.swift in Sources */,
 				0C2E1B362AB47A83001515DE /* GoalAdd.swift in Sources */,
 				0C1FE1332A8D0F7E005F5842 /* CalendarView.swift in Sources */,
@@ -360,8 +371,9 @@
 				0C3719562A9A02DD00D777A0 /* CalendarWeeklyView.swift in Sources */,
 				0CA4BDFD2ABE83E300AFEB04 /* SubGoalDetail.swift in Sources */,
 				0CA4BE022ABEB4A200AFEB04 /* AddSchedule.swift in Sources */,
-				0CA4BE042ABF2D9C00AFEB04 /* ScheduleList.swift in Sources */,
+				0CA4BE042ABF2D9C00AFEB04 /* GoalScheduleList.swift in Sources */,
 				0CDAAD2A2A8BA56E00520D8A /* SampleData.swift in Sources */,
+				0C50163E2AD131B100FEF2B5 /* CalendatMonthly.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
