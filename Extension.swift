@@ -154,25 +154,29 @@ extension Date {
 
 
 // 月の初日から末日までのDateを生成する関数
-func generateDatesOfMonth(selectedMonth: Date) -> [Date]? {
-    var dates: [Date] = []
-    
+func generateDatesOfMonth(for selectedMonth: Date) -> [Date]? {
     let calendar = Calendar.current
     
-    // 月の初日を取得
-    guard let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: selectedMonth)) else {
-        return dates
+    guard
+        // selectedMonthの年と月のうちの、初日を取得
+        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: selectedMonth)),
+        // startOfMonthの1ヶ月後の1秒前を取得
+        let endOfMonth = calendar.date(byAdding: .month, value: 1, to: startOfMonth)?.addingTimeInterval(-1)
+    else {
+        return nil
     }
     
-    // 月の末日を取得
-    guard let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth) else {
-        return dates
-    }
-    
+    var dates: [Date] = []
     var currentDate = startOfMonth
+    // currentDateがendOfMonthに追いつくまで、currentDateを加算しながら配列に追加する
     while currentDate <= endOfMonth {
         dates.append(currentDate)
-        currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
+        
+        if let nextDate = calendar.date(byAdding: .day, value: 1, to: currentDate) {
+            currentDate = nextDate
+        } else {
+            break
+        }
     }
     
     return dates
@@ -180,6 +184,11 @@ func generateDatesOfMonth(selectedMonth: Date) -> [Date]? {
 
 
 extension Date {
+    // 曜日を数値で返す 日:1 ... 土:6
+    func getWeekDay() -> Int {
+        return Calendar.current.component(.weekday, from: self) - 1
+    }
+    
     var firstDayOfNextMonth: Date? {
         let calendar = Calendar.current
         if let nextMonth = calendar.date(byAdding: .month, value: 1, to: self) {

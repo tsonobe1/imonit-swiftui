@@ -14,7 +14,7 @@ struct CalendarView: View {
     let currentDate: Date = Date()
     @State var selectedMonth: Date = Date()
     var dateOfMonth: [Date] {
-        generateDatesOfMonth(selectedMonth: selectedMonth)!
+        generateDatesOfMonth(for: selectedMonth)!
     }
     
     enum CalendarOption: String, CaseIterable {
@@ -68,22 +68,18 @@ struct CalendarView: View {
             
         NavigationStack {
             VStack(alignment: .trailing){
-                Group {
-                    
-                   
-                }
+                MonthSelector(selectedMonth: $selectedMonth)
                 
                 switch selectedCalender {
                 case .daily:
-                    CalendarDailyView(selectedDate: $selectedDate)
+                    CalendarDaily(selectedDate: $selectedDate)
                 case .weekly:
-                    CalendarWeeklyView(currentDate: currentDate, selectedMonth: $selectedMonth, dateOfMonth: dateOfMonth)
+                    CalendarWeekly(currentDate: currentDate, selectedMonth: $selectedMonth, dateOfMonth: dateOfMonth)
                 case .monthly:
-                    Text("Monthly View")
+                    CalendatMonthly(selectedMonth: $selectedMonth, dateOfMonth: dateOfMonth)
                 case .yearly:
                     Text("Yearly View")
                 }
-                    
             }
             .toolbar{
                 ToolbarItemGroup {
@@ -101,12 +97,9 @@ struct CalendarView: View {
                                 Text(option.rawValue).tag(option)
                             }
                         }
-                        //                    .containerRelativeFrame(.horizontal, count: 10, span: 5, spacing: 0)
                         .pickerStyle(.menu)
                         toolbar
-                        
-                        //                    .containerRelativeFrame(.horizontal, count: 10, span: 5, spacing: 0)
-                    }
+                                            }
                     .padding(.horizontal)
                 }
             }
@@ -115,8 +108,6 @@ struct CalendarView: View {
     
     }
     var toolbar: some View {
-            
-            
             HStack{
                 // Search Schedules
                 Button(action: {
@@ -126,28 +117,17 @@ struct CalendarView: View {
                 
                 ) {
                     Image(systemName: "magnifyingglass")
-                    //                    .font(.title2)
-                    //                    .padding(.horizontal,5)
                 }
-                
-                
-                
+
                 // Add New Schedules
                 Button(action: {isPresentedAddSchedule.toggle()}) {
                     Image(systemName: "plus")
-                    //                    .font(.title2)
-                    //                    .padding(.horizontal,5)
                 }
             }
             .sheet(isPresented: $isPresentedAddSchedule, content: {
                 AddSchedule()
             })
-            
-    
     }
-
-
-    
 }
 
 #Preview {
